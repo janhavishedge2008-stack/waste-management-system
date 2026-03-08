@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block title %}Available Waste{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Available Waste Materials</h1>
+    
+    <div class="row">
+        {% for waste_type in waste_types %}
+        <div class="col-md-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h5 class="card-title text-success">{{ waste_type.name }}</h5>
+                    <p class="card-text">{{ waste_type.description }}</p>
+                    <a href="{% url 'create_waste_request' %}" class="btn btn-success">Request This Material</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12">
+            <p class="text-center">No waste types available at the moment.</p>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

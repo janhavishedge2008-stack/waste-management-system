@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+{% block title %}Company Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Company Dashboard</h1>
+    <p class="lead">Welcome, {{ user.username }}!</p>
+
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <h3>{{ requests.count }}</h3>
+                    <p>Total Requests</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body text-center">
+                    <h3>{{ requests|length }}</h3>
+                    <p>Active Requests</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-warning text-white">
+                <div class="card-body text-center">
+                    <h3>0</h3>
+                    <p>Fulfilled Orders</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <a href="{% url 'create_waste_request' %}" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Create Waste Request
+        </a>
+        <a href="{% url 'available_waste' %}" class="btn btn-info btn-lg">
+            <i class="fas fa-eye"></i> View Available Waste
+        </a>
+    </div>
+
+    <h3>Your Waste Requests</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Waste Type</th>
+                    <th>Quantity</th>
+                    <th>Status</th>
+                    <th>Created</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for request in requests %}
+                <tr>
+                    <td>{{ request.waste_type.name }}</td>
+                    <td>{{ request.quantity }} {{ request.unit }}</td>
+                    <td>
+                        <span class="badge bg-{% if request.status == 'approved' %}success{% elif request.status == 'pending' %}warning{% else %}info{% endif %}">
+                            {{ request.get_status_display }}
+                        </span>
+                    </td>
+                    <td>{{ request.created_at|date:"M d, Y" }}</td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="4" class="text-center">No requests yet</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

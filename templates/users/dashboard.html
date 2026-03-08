@@ -1,0 +1,80 @@
+{% extends 'base.html' %}
+{% block title %}User Dashboard{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Welcome, {{ user.username }}!</h1>
+    
+    <div class="row mb-4">
+        <div class="col-md-4">
+            <div class="card bg-success text-white">
+                <div class="card-body text-center">
+                    <h3>{{ user.reward_points }}</h3>
+                    <p>Reward Points</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-primary text-white">
+                <div class="card-body text-center">
+                    <h3>{{ pickups.count }}</h3>
+                    <p>Total Pickups</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card bg-info text-white">
+                <div class="card-body text-center">
+                    <h3>{{ pickups|length }}</h3>
+                    <p>Active Requests</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-4">
+        <a href="{% url 'create_pickup' %}" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Schedule New Pickup
+        </a>
+    </div>
+
+    <h3>Recent Pickup Requests</h3>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Waste Type</th>
+                    <th>Location</th>
+                    <th>Pickup Date</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pickup in pickups %}
+                <tr>
+                    <td>{{ pickup.waste_type.name }}</td>
+                    <td>{{ pickup.location }}</td>
+                    <td>{{ pickup.pickup_date }}</td>
+                    <td>
+                        <span class="badge bg-{% if pickup.status == 'completed' %}success{% elif pickup.status == 'pending' %}warning{% else %}info{% endif %}">
+                            {{ pickup.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{% url 'pickup_detail' pickup.id %}" class="btn btn-sm btn-info">View</a>
+                        {% if pickup.status == 'pending' %}
+                        <a href="{% url 'cancel_pickup' pickup.id %}" class="btn btn-sm btn-danger" onclick="return confirm('Cancel this pickup?')">Cancel</a>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No pickup requests yet</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

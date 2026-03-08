@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}Pickup Details{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="card">
+        <div class="card-header bg-success text-white">
+            <h3>Pickup Request Details</h3>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-6">
+                    <p><strong>Waste Type:</strong> {{ pickup.waste_type.name }}</p>
+                    <p><strong>Location:</strong> {{ pickup.location }}</p>
+                    <p><strong>Pickup Date:</strong> {{ pickup.pickup_date }}</p>
+                    <p><strong>Pickup Time:</strong> {{ pickup.pickup_time|default:"Not specified" }}</p>
+                </div>
+                <div class="col-md-6">
+                    <p><strong>Quantity Estimate:</strong> {{ pickup.quantity_estimate|default:"Not specified" }}</p>
+                    <p><strong>Status:</strong> 
+                        <span class="badge bg-{% if pickup.status == 'completed' %}success{% elif pickup.status == 'pending' %}warning{% else %}info{% endif %}">
+                            {{ pickup.get_status_display }}
+                        </span>
+                    </p>
+                    <p><strong>Created:</strong> {{ pickup.created_at|date:"M d, Y H:i" }}</p>
+                </div>
+            </div>
+            {% if pickup.special_instructions %}
+            <hr>
+            <p><strong>Special Instructions:</strong></p>
+            <p>{{ pickup.special_instructions }}</p>
+            {% endif %}
+            <hr>
+            <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

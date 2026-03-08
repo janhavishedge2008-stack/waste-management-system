@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% block title %}Recycling & Sustainability{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-5">Recycling & Sustainability</h1>
+    
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <h3>Our Recycling Methods</h3>
+            <p>We employ state-of-the-art recycling technologies to ensure maximum material recovery and minimal environmental impact.</p>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-success"><i class="fas fa-newspaper"></i> Paper Recycling</h5>
+                    <p>Paper is pulped, cleaned, and reformed into new paper products, saving trees and energy.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-success"><i class="fas fa-bottle-water"></i> Plastic Recycling</h5>
+                    <p>Plastics are sorted, cleaned, melted, and reformed into new products or materials.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="text-success"><i class="fas fa-cog"></i> Metal Recycling</h5>
+                    <p>Metals are melted down and recast, requiring less energy than mining new materials.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="bg-success text-white p-4 rounded my-5">
+        <h3 class="text-center">Environmental Impact</h3>
+        <div class="row text-center mt-4">
+            <div class="col-md-4">
+                <h2>60%</h2>
+                <p>Reduction in CO2 Emissions</p>
+            </div>
+            <div class="col-md-4">
+                <h2>5000+</h2>
+                <p>Trees Saved Annually</p>
+            </div>
+            <div class="col-md-4">
+                <h2>80%</h2>
+                <p>Energy Saved vs New Production</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <h3>Waste Segregation Guidelines</h3>
+            <table class="table table-striped mt-3">
+                <thead>
+                    <tr>
+                        <th>Category</th>
+                        <th>Examples</th>
+                        <th>Bin Color</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Recyclable</td>
+                        <td>Paper, Plastic, Metal, Glass</td>
+                        <td><span class="badge bg-primary">Blue</span></td>
+                    </tr>
+                    <tr>
+                        <td>Organic</td>
+                        <td>Food waste, Garden waste</td>
+                        <td><span class="badge bg-success">Green</span></td>
+                    </tr>
+                    <tr>
+                        <td>Hazardous</td>
+                        <td>Batteries, Chemicals, E-waste</td>
+                        <td><span class="badge bg-danger">Red</span></td>
+                    </tr>
+                    <tr>
+                        <td>General</td>
+                        <td>Non-recyclable items</td>
+                        <td><span class="badge bg-secondary">Black</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

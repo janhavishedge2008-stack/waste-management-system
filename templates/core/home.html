@@ -1,0 +1,73 @@
+{% extends 'base.html' %}
+{% block title %}Home - Waste Management System{% endblock %}
+
+{% block content %}
+<div class="hero-section bg-success text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-4 mb-4">Eco-Friendly Waste Management Solutions</h1>
+        <p class="lead mb-4">Join us in creating a cleaner, greener future through responsible waste disposal and recycling</p>
+        <div class="mt-4">
+            <a href="{% url 'create_pickup' %}" class="btn btn-light btn-lg me-3">
+                <i class="fas fa-calendar-check"></i> Schedule Pickup
+            </a>
+            <a href="{% url 'company_tieup' %}" class="btn btn-outline-light btn-lg">
+                <i class="fas fa-handshake"></i> Join as Company
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="container my-5">
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <i class="fas fa-recycle fa-3x text-success mb-3"></i>
+                    <h4>Recycling Services</h4>
+                    <p>Professional recycling solutions for all types of waste materials</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <i class="fas fa-truck fa-3x text-success mb-3"></i>
+                    <h4>Scheduled Pickups</h4>
+                    <p>Convenient waste collection at your doorstep on your schedule</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 shadow">
+                <div class="card-body">
+                    <i class="fas fa-leaf fa-3x text-success mb-3"></i>
+                    <h4>Eco-Friendly</h4>
+                    <p>Sustainable practices that protect our environment</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-4">Why Choose Us?</h2>
+        <div class="row">
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> 24/7 Customer Support</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Certified Waste Management</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Reward Points System</li>
+                </ul>
+            </div>
+            <div class="col-md-6">
+                <ul class="list-unstyled">
+                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Company Partnerships</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Environmental Impact Tracking</li>
+                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Flexible Pricing Plans</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

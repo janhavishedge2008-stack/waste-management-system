@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block title %}Pickup History{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="mb-4">Pickup History</h1>
+    
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Date</th>
+                    <th>Waste Type</th>
+                    <th>Location</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for pickup in pickups %}
+                <tr>
+                    <td>{{ pickup.pickup_date }}</td>
+                    <td>{{ pickup.waste_type.name }}</td>
+                    <td>{{ pickup.location }}</td>
+                    <td>
+                        <span class="badge bg-{% if pickup.status == 'completed' %}success{% elif pickup.status == 'pending' %}warning{% else %}info{% endif %}">
+                            {{ pickup.get_status_display }}
+                        </span>
+                    </td>
+                    <td>
+                        <a href="{% url 'pickup_detail' pickup.id %}" class="btn btn-sm btn-info">View</a>
+                    </td>
+                </tr>
+                {% empty %}
+                <tr>
+                    <td colspan="5" class="text-center">No pickup history</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

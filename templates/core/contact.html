@@ -1,0 +1,56 @@
+{% extends 'base.html' %}
+{% block title %}Contact Us{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-5">Contact Us</h1>
+    
+    <div class="row">
+        <div class="col-md-6">
+            <h3>Get In Touch</h3>
+            <form method="post">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label class="form-label">Name</label>
+                    <input type="text" name="name" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Email</label>
+                    <input type="email" name="email" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Subject</label>
+                    <input type="text" name="subject" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Message</label>
+                    <textarea name="message" class="form-control" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-success">Send Message</button>
+            </form>
+        </div>
+        
+        <div class="col-md-6">
+            <h3>Contact Information</h3>
+            <div class="mb-4">
+                <h5><i class="fas fa-map-marker-alt text-success"></i> Address</h5>
+                <p>123 Green Street, Eco City, EC 12345</p>
+            </div>
+            <div class="mb-4">
+                <h5><i class="fas fa-phone text-success"></i> Phone</h5>
+                <p>+1 234 567 8900</p>
+            </div>
+            <div class="mb-4">
+                <h5><i class="fas fa-envelope text-success"></i> Email</h5>
+                <p>info@ecowaste.com</p>
+            </div>
+            <div class="mb-4">
+                <h5><i class="fas fa-clock text-success"></i> Business Hours</h5>
+                <p>Monday - Friday: 8:00 AM - 6:00 PM<br>
+                Saturday: 9:00 AM - 4:00 PM<br>
+                Sunday: Closed</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

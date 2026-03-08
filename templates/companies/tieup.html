@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% block title %}Company Tie-Up{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-4">Partner With Us</h1>
+    
+    <div class="row mb-5">
+        <div class="col-md-12">
+            <p class="lead text-center">Join our network of companies that source recycled materials for their operations. Help create a circular economy while reducing costs.</p>
+        </div>
+    </div>
+
+    <div class="row mb-5">
+        <div class="col-md-4 text-center mb-4">
+            <i class="fas fa-handshake fa-3x text-success mb-3"></i>
+            <h4>Easy Partnership</h4>
+            <p>Simple registration process to start sourcing materials</p>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <i class="fas fa-dollar-sign fa-3x text-success mb-3"></i>
+            <h4>Cost Effective</h4>
+            <p>Access recycled materials at competitive prices</p>
+        </div>
+        <div class="col-md-4 text-center mb-4">
+            <i class="fas fa-leaf fa-3x text-success mb-3"></i>
+            <h4>Sustainable</h4>
+            <p>Contribute to environmental sustainability goals</p>
+        </div>
+    </div>
+
+    <div class="card mb-5">
+        <div class="card-body">
+            <h3>Available Waste Materials</h3>
+            <div class="row mt-4">
+                <div class="col-md-6">
+                    <ul>
+                        <li><strong>Plastic:</strong> PET, HDPE, PVC, and more</li>
+                        <li><strong>Paper:</strong> Cardboard, office paper, newspapers</li>
+                        <li><strong>Metal:</strong> Aluminum, steel, copper</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <ul>
+                        <li><strong>E-waste:</strong> Electronic components, circuit boards</li>
+                        <li><strong>Organic:</strong> Compost, biodegradable materials</li>
+                        <li><strong>Glass:</strong> Various glass types and colors</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-center">
+        <h3 class="mb-4">Ready to Partner?</h3>
+        {% if user.is_authenticated and user.user_type == 'company' %}
+            <a href="{% url 'company_dashboard' %}" class="btn btn-success btn-lg">Go to Dashboard</a>
+        {% else %}
+            <a href="{% url 'register_company' %}" class="btn btn-success btn-lg me-3">Register as Company</a>
+            <a href="{% url 'contact' %}" class="btn btn-outline-success btn-lg">Contact Us</a>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}

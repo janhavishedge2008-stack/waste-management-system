@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block title %}Blog{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-5">Education & Blog</h1>
+    
+    {% if posts %}
+        <div class="row">
+            {% for post in posts %}
+            <div class="col-md-6 mb-4">
+                <div class="card h-100">
+                    {% if post.image %}
+                    <img src="{{ post.image.url }}" class="card-img-top" alt="{{ post.title }}">
+                    {% endif %}
+                    <div class="card-body">
+                        <h5 class="card-title">{{ post.title }}</h5>
+                        <p class="card-text">{{ post.content|truncatewords:30 }}</p>
+                        <p class="text-muted"><small>By {{ post.author }} | {{ post.created_at|date:"M d, Y" }}</small></p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>The Importance of Waste Segregation</h5>
+                        <p>Learn why proper waste segregation is crucial for effective recycling and environmental protection.</p>
+                        <small class="text-muted">March 1, 2026</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6 mb-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5>How Recycling Helps Combat Climate Change</h5>
+                        <p>Discover the direct impact of recycling on reducing carbon emissions and preserving natural resources.</p>
+                        <small class="text-muted">February 28, 2026</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

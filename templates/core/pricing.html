@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Pricing Plans{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center mb-5">Pricing Plans</h1>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-header bg-success text-white">
+                    <h4>Household</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="mb-3">$29<small>/month</small></h2>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Weekly Pickup</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Up to 50kg/month</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Recycling Services</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Reward Points</li>
+                    </ul>
+                    <a href="{% url 'register_user' %}" class="btn btn-success mt-3">Get Started</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center border-success">
+                <div class="card-header bg-warning text-dark">
+                    <h4>Business</h4>
+                    <span class="badge bg-danger">Popular</span>
+                </div>
+                <div class="card-body">
+                    <h2 class="mb-3">$99<small>/month</small></h2>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Daily Pickup</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Up to 500kg/month</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> All Waste Types</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Priority Support</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Analytics Dashboard</li>
+                    </ul>
+                    <a href="{% url 'register_company' %}" class="btn btn-warning mt-3">Get Started</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="card h-100 text-center">
+                <div class="card-header bg-dark text-white">
+                    <h4>Industrial</h4>
+                </div>
+                <div class="card-body">
+                    <h2 class="mb-3">Custom</h2>
+                    <ul class="list-unstyled">
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Custom Schedule</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Unlimited Quantity</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Hazardous Waste</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Dedicated Manager</li>
+                        <li class="mb-2"><i class="fas fa-check text-success"></i> Compliance Reports</li>
+                    </ul>
+                    <a href="{% url 'contact' %}" class="btn btn-dark mt-3">Contact Us</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
