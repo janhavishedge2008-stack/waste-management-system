@@ -27,6 +27,9 @@
                     <li class="nav-item"><a class="nav-link" href="{% url 'recycling' %}">Recycling</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
                     <li class="nav-item"><a class="nav-link" href="{% url 'company_tieup' %}">Company Tie-Up</a></li>
+                    {% if user.is_staff %}
+                        <li class="nav-item"><a class="nav-link btn btn-warning text-dark ms-2" href="/admin/"><i class="fas fa-user-shield"></i> Admin</a></li>
+                    {% endif %}
                     {% if user.is_authenticated %}
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
