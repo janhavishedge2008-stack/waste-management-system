@@ -1,0 +1,123 @@
+================================================================================
+                    ADMIN PANEL ACCESS
+================================================================================
+
+ADMIN PANEL URL:
+    http://localhost:8000/admin/
+
+LOGIN CREDENTIALS:
+    Username: admin
+    Password: admin123
+
+================================================================================
+HOW TO ACCESS:
+================================================================================
+
+Method 1: Direct URL
+--------------------
+1. Start server: START_SERVER.bat
+2. Open browser
+3. Go to: http://localhost:8000/admin/
+4. Login with admin/admin123
+
+Method 2: From Website (After Login)
+-------------------------------------
+1. Go to: http://localhost:8000
+2. Click "Login" in top right
+3. Login with admin/admin123
+4. Click on your username dropdown (top right)
+5. Click "Admin Panel"
+
+================================================================================
+ADMIN PANEL SECTIONS:
+================================================================================
+
+Authentication and Authorization
+    - Groups
+    - Users (Custom User Model)
+
+Companies
+    - Company Waste Requests (View company requests)
+    - Waste Types (Manage waste categories)
+
+Core
+    - Blog Posts (Add/Edit/Delete blogs)
+    - Contact Messages (View inquiries)
+
+Pickups
+    - Pickup Requests (View scheduled pickups)
+
+================================================================================
+WHAT YOU CAN DO:
+================================================================================
+
+✓ Add new blog posts
+✓ Edit existing blog posts
+✓ Delete blog posts
+✓ View all pickup requests with user details
+✓ View all company waste requests
+✓ Manage users (add/edit/delete)
+✓ Manage waste types
+✓ View contact form submissions
+✓ Approve/reject company requests
+✓ Update pickup statuses
+✓ Search and filter all data
+
+================================================================================
+QUICK LINKS:
+================================================================================
+
+Admin Dashboard:        http://localhost:8000/admin/
+Blog Posts:             http://localhost:8000/admin/core/blogpost/
+Pickup Requests:        http://localhost:8000/admin/pickups/pickuprequest/
+Company Requests:       http://localhost:8000/admin/companies/companywasterequest/
+Users:                  http://localhost:8000/admin/users/user/
+Waste Types:            http://localhost:8000/admin/companies/wastetype/
+Contact Messages:       http://localhost:8000/admin/core/contactmessage/
+
+================================================================================
+TROUBLESHOOTING:
+================================================================================
+
+Problem: Can't access admin panel
+Solution: Make sure you're logged in as admin user
+
+Problem: "Admin Panel" not showing in dropdown
+Solution: You need to login as admin (staff user)
+
+Problem: Forgot admin password
+Solution: Run: python manage.py changepassword admin
+
+Problem: Need to create new admin
+Solution: Run: python manage.py createsuperuser
+
+================================================================================
+FEATURES:
+================================================================================
+
+Blog Management:
+- Add new posts with images
+- Edit existing posts
+- Delete posts
+- View all posts
+
+Pickup Management:
+- See who scheduled pickups
+- View user email and details
+- Filter by status, waste type, date
+- Update pickup status
+
+Company Request Management:
+- See which company wants what waste
+- View company email
+- Approve/reject requests
+- Filter by status and waste type
+
+User Management:
+- View all users (regular and company)
+- Edit user details
+- Manage permissions
+- View reward points
+
+================================================================================
+

@@ -33,6 +33,10 @@
                                 {{ user.username }}
                             </a>
                             <ul class="dropdown-menu">
+                                {% if user.is_staff %}
+                                    <li><a class="dropdown-item" href="/admin/"><i class="fas fa-user-shield"></i> Admin Panel</a></li>
+                                    <li><hr class="dropdown-divider"></li>
+                                {% endif %}
                                 {% if user.user_type == 'company' %}
                                     <li><a class="dropdown-item" href="{% url 'company_dashboard' %}">Dashboard</a></li>
                                 {% else %}
