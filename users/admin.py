@@ -2,22 +2,21 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import User
 
-@admin.register(User)
 class CustomUserAdmin(UserAdmin):
-    list_display = ['username', 'email', 'user_type', 'phone', 'reward_points', 'is_active']
+    list_display = ['username', 'email', 'user_type', 'is_active']
     list_filter = ['user_type', 'is_staff', 'is_active']
-    search_fields = ['username', 'email', 'phone', 'company_name', 'address']
+    search_fields = ['username', 'email', 'phone']
     
     fieldsets = UserAdmin.fieldsets + (
         ('Additional Info', {
-            'fields': ('user_type', 'phone', 'address', 'company_name', 'reward_points', 'created_at')
+            'fields': ('user_type', 'phone', 'address', 'company_name', 'reward_points')
         }),
     )
-    
-    readonly_fields = ['created_at']
     
     add_fieldsets = UserAdmin.add_fieldsets + (
         ('Additional Info', {
-            'fields': ('user_type', 'email', 'phone', 'address')
+            'fields': ('user_type', 'email', 'phone')
         }),
     )
+
+admin.site.register(User, CustomUserAdmin)
