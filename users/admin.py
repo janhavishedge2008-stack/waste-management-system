@@ -7,7 +7,7 @@ class CustomUserAdmin(UserAdmin):
     list_display = ['username', 'email', 'user_type', 'phone', 'reward_points', 'is_active', 'created_at']
     list_filter = ['user_type', 'is_staff', 'is_active', 'created_at']
     search_fields = ['username', 'email', 'phone', 'company_name', 'address']
-    readonly_fields = ['created_at', 'last_login', 'date_joined']
+    readonly_fields = ['created_at']
     date_hierarchy = 'created_at'
     
     fieldsets = UserAdmin.fieldsets + (
@@ -21,8 +21,8 @@ class CustomUserAdmin(UserAdmin):
         ('Rewards', {
             'fields': ('reward_points',)
         }),
-        ('Important Dates', {
-            'fields': ('created_at', 'last_login', 'date_joined'),
+        ('Registration Date', {
+            'fields': ('created_at',),
             'classes': ('collapse',)
         }),
     )
