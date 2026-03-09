@@ -1,0 +1,64 @@
+================================================================================
+                    PUSH TO GITHUB - COMMANDS
+================================================================================
+
+After creating your GitHub repository, run these commands:
+
+Replace YOUR_USERNAME with your actual GitHub username
+Replace REPO_NAME with your repository name
+
+================================================================================
+COMMANDS:
+================================================================================
+
+git branch -M main
+git remote add origin https://github.com/YOUR_USERNAME/REPO_NAME.git
+git push -u origin main
+
+================================================================================
+EXAMPLE:
+================================================================================
+
+If your username is "john" and repo is "waste-management-system":
+
+git branch -M main
+git remote add origin https://github.com/john/waste-management-system.git
+git push -u origin main
+
+================================================================================
+WHAT'S ALREADY DONE:
+================================================================================
+
+✓ Git initialized
+✓ All files added
+✓ Initial commit created
+✓ .gitignore configured (excludes .env, db.sqlite3, venv)
+
+================================================================================
+NEXT STEPS:
+================================================================================
+
+1. Create repository on GitHub
+2. Copy your repository URL
+3. Run the commands above with your URL
+4. Enter your GitHub credentials when prompted
+
+================================================================================
+WHAT WILL BE PUSHED:
+================================================================================
+
+✓ All source code (Django apps)
+✓ Templates (HTML files)
+✓ Static files (CSS)
+✓ Configuration files
+✓ README.md
+✓ requirements.txt
+
+NOT pushed (in .gitignore):
+✗ .env (secrets)
+✗ db.sqlite3 (database)
+✗ venv/ (virtual environment)
+✗ __pycache__/ (Python cache)
+
+================================================================================
+

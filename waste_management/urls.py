@@ -3,6 +3,11 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+# Customize admin site
+admin.site.site_header = "EcoWaste Management System"
+admin.site.site_title = "EcoWaste Admin"
+admin.site.index_title = "Welcome to EcoWaste Management Dashboard"
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('core.urls')),
