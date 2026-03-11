@@ -1,0 +1,38 @@
+{% extends "admin/change_list.html" %}
+
+{% block content_title %}
+<h1>Company Waste Requests Summary</h1>
+
+<div style="background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 5px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div style="background: white; padding: 15px; border-left: 4px solid #007bff; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">Total Requests</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #007bff;">{{ total_requests }}</p>
+        </div>
+        <div style="background: white; padding: 15px; border-left: 4px solid #ffc107; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">Pending</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #ffc107;">{{ pending_requests }}</p>
+        </div>
+        <div style="background: white; padding: 15px; border-left: 4px solid #28a745; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">Approved</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #28a745;">{{ approved_requests }}</p>
+        </div>
+        <div style="background: white; padding: 15px; border-left: 4px solid #17a2b8; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">Fulfilled</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #17a2b8;">{{ fulfilled_requests }}</p>
+        </div>
+    </div>
+    
+    <div style="margin-top: 20px; background: white; padding: 15px; border-radius: 3px;">
+        <h3 style="margin: 0 0 10px 0; color: #333; font-size: 16px;">📊 Quick Stats</h3>
+        <p style="margin: 5px 0; color: #666;">
+            <strong>Companies can request specific waste types they need for their operations.</strong><br>
+            Review requests below to see which company wants what type of waste material.
+        </p>
+    </div>
+</div>
+{% endblock %}
+
+{% block result_list %}
+    {{ block.super }}
+{% endblock %}

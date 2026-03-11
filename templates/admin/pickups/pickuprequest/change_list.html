@@ -1,0 +1,51 @@
+{% extends "admin/change_list.html" %}
+
+{% block content_title %}
+<h1>Pickup Requests Summary</h1>
+
+<div style="background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 5px;">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div style="background: white; padding: 15px; border-left: 4px solid #007bff; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">Total Requests</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #007bff;">{{ total_requests }}</p>
+        </div>
+        <div style="background: white; padding: 15px; border-left: 4px solid #ffc107; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">Pending</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #ffc107;">{{ pending_requests }}</p>
+        </div>
+        <div style="background: white; padding: 15px; border-left: 4px solid #17a2b8; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">Confirmed</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #17a2b8;">{{ confirmed_requests }}</p>
+        </div>
+        <div style="background: white; padding: 15px; border-left: 4px solid #fd7e14; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">In Progress</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #fd7e14;">{{ in_progress_requests }}</p>
+        </div>
+        <div style="background: white; padding: 15px; border-left: 4px solid #28a745; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">Completed</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #28a745;">{{ completed_requests }}</p>
+        </div>
+        <div style="background: white; padding: 15px; border-left: 4px solid #6c757d; border-radius: 3px;">
+            <h3 style="margin: 0; color: #666; font-size: 14px;">Unique Users</h3>
+            <p style="margin: 5px 0 0 0; font-size: 28px; font-weight: bold; color: #6c757d;">{{ unique_users }}</p>
+        </div>
+    </div>
+    
+    {% if waste_type_stats %}
+    <div style="margin-top: 20px; background: white; padding: 15px; border-radius: 3px;">
+        <h3 style="margin: 0 0 10px 0; color: #333; font-size: 16px;">Top Requested Waste Types</h3>
+        <ul style="list-style: none; padding: 0; margin: 0;">
+            {% for stat in waste_type_stats %}
+            <li style="padding: 8px 0; border-bottom: 1px solid #eee;">
+                <strong>{{ stat.waste_type__name }}:</strong> {{ stat.count }} request{{ stat.count|pluralize }}
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
+
+{% block result_list %}
+    {{ block.super }}
+{% endblock %}
