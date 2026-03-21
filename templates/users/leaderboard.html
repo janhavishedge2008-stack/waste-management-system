@@ -1,0 +1,90 @@
+{% extends 'base.html' %}
+{% block title %}Leaderboard - EcoWaste{% endblock %}
+
+{% block content %}
+<div class="container my-5">
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">🏆 Eco Leaderboard</h1>
+        <p class="text-muted">Top recyclers making the biggest impact. Earn points by scheduling pickups!</p>
+    </div>
+
+    <!-- Top 3 podium -->
+    {% if top_users %}
+    <div class="row justify-content-center align-items-end mb-5 g-3">
+        {% for user in top_users %}
+        {% if forloop.counter <= 3 %}
+        <div class="col-4 col-md-2 text-center {% if forloop.counter == 1 %}order-md-2{% elif forloop.counter == 2 %}order-md-1{% else %}order-md-3{% endif %}">
+            <div class="podium-card p-3 rounded-4 shadow
+                {% if forloop.counter == 1 %}podium-gold{% elif forloop.counter == 2 %}podium-silver{% else %}podium-bronze{% endif %}">
+                <div class="podium-avatar mx-auto mb-2">{{ user.username|first|upper }}</div>
+                <div class="fw-bold small">{{ user.username }}</div>
+                <div class="fs-5 fw-bold">
+                    {% if forloop.counter == 1 %}🥇{% elif forloop.counter == 2 %}🥈{% else %}🥉{% endif %}
+                </div>
+                <div class="badge bg-white text-dark mt-1">{{ user.reward_points }} pts</div>
+            </div>
+            <div class="podium-base {% if forloop.counter == 1 %}podium-base-1{% elif forloop.counter == 2 %}podium-base-2{% else %}podium-base-3{% endif %} rounded-bottom-4"></div>
+        </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    {% endif %}
+
+    <!-- Full table -->
+    <div class="card border-0 shadow-sm rounded-4">
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Rank</th>
+                            <th>User</th>
+                            <th>Level</th>
+                            <th class="text-end pe-4">Points</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for u in top_users %}
+                        <tr {% if request.user == u %}class="table-success"{% endif %}>
+                            <td class="ps-4 fw-bold">
+                                {% if forloop.counter == 1 %}🥇
+                                {% elif forloop.counter == 2 %}🥈
+                                {% elif forloop.counter == 3 %}🥉
+                                {% else %}#{{ forloop.counter }}{% endif %}
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center gap-2">
+                                    <div class="avatar-sm">{{ u.username|first|upper }}</div>
+                                    <div>
+                                        <div class="fw-semibold">{{ u.username }}
+                                            {% if request.user == u %}<span class="badge bg-success-subtle text-success ms-1">You</span>{% endif %}
+                                        </div>
+                                        <small class="text-muted">{{ u.get_full_name }}</small>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                {% if u.reward_points >= 500 %}<span class="badge bg-info">🏆 Platinum</span>
+                                {% elif u.reward_points >= 200 %}<span class="badge bg-warning text-dark">🥇 Gold</span>
+                                {% elif u.reward_points >= 100 %}<span class="badge bg-secondary">🥈 Silver</span>
+                                {% else %}<span class="badge bg-warning text-dark" style="background:#cd7f32!important;">🥉 Bronze</span>{% endif %}
+                            </td>
+                            <td class="text-end pe-4 fw-bold text-success">{{ u.reward_points }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr><td colspan="4" class="text-center py-4 text-muted">No users yet. Be the first!</td></tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    {% if not request.user.is_authenticated %}
+    <div class="text-center mt-5">
+        <p class="text-muted">Want to appear on the leaderboard?</p>
+        <a href="{% url 'register_user' %}" class="btn btn-success btn-lg px-5">Join Now — It's Free</a>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}

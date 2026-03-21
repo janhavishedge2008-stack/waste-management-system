@@ -1,77 +1,198 @@
 {% extends 'base.html' %}
-{% block title %}Company Dashboard{% endblock %}
+{% block title %}Company Dashboard - EcoWaste{% endblock %}
 
 {% block content %}
 <div class="container my-5">
-    <h1 class="mb-4">Company Dashboard</h1>
-    <p class="lead">Welcome, {{ user.username }}!</p>
 
-    <div class="row mb-4">
-        <div class="col-md-4">
-            <div class="card bg-primary text-white">
-                <div class="card-body text-center">
-                    <h3>{{ requests.count }}</h3>
-                    <p>Total Requests</p>
-                </div>
+    <!-- Header -->
+    <div class="dashboard-header rounded-4 p-4 mb-4 d-flex flex-wrap align-items-center justify-content-between gap-3">
+        <div class="d-flex align-items-center gap-3">
+            <div class="avatar-lg">🏢</div>
+            <div>
+                <h3 class="fw-bold mb-0">{{ user.get_full_name|default:user.username }}</h3>
+                <span class="badge bg-primary-subtle text-primary">Company Account</span>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card bg-success text-white">
-                <div class="card-body text-center">
-                    <h3>{{ requests|length }}</h3>
-                    <p>Active Requests</p>
-                </div>
+        <div class="d-flex gap-2">
+            <a href="{% url 'create_waste_request' %}" class="btn btn-success">
+                <i class="fas fa-plus me-1"></i>New Request
+            </a>
+            <a href="{% url 'available_waste' %}" class="btn btn-outline-info">
+                <i class="fas fa-eye me-1"></i>Available Waste
+            </a>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="dash-stat-card p-3 rounded-4 text-center h-100">
+                <i class="fas fa-list fa-2x mb-2 text-primary"></i>
+                <div class="fs-3 fw-bold">{{ total }}</div>
+                <div class="text-muted small">Total Requests</div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card bg-warning text-white">
-                <div class="card-body text-center">
-                    <h3>0</h3>
-                    <p>Fulfilled Orders</p>
-                </div>
+        <div class="col-6 col-md-3">
+            <div class="dash-stat-card p-3 rounded-4 text-center h-100">
+                <i class="fas fa-clock fa-2x mb-2 text-warning"></i>
+                <div class="fs-3 fw-bold">{{ pending }}</div>
+                <div class="text-muted small">Pending</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="dash-stat-card p-3 rounded-4 text-center h-100">
+                <i class="fas fa-check-circle fa-2x mb-2 text-success"></i>
+                <div class="fs-3 fw-bold">{{ approved }}</div>
+                <div class="text-muted small">Approved</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="dash-stat-card p-3 rounded-4 text-center h-100">
+                <i class="fas fa-box-check fa-2x mb-2 text-info"></i>
+                <div class="fs-3 fw-bold">{{ fulfilled }}</div>
+                <div class="text-muted small">Fulfilled</div>
             </div>
         </div>
     </div>
 
-    <div class="mb-4">
-        <a href="{% url 'create_waste_request' %}" class="btn btn-success btn-lg">
-            <i class="fas fa-plus"></i> Create Waste Request
-        </a>
-        <a href="{% url 'available_waste' %}" class="btn btn-info btn-lg">
-            <i class="fas fa-eye"></i> View Available Waste
-        </a>
-    </div>
+    <div class="row g-4">
+        <!-- Requests Table -->
+        <div class="col-lg-8">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h5 class="fw-bold mb-0">Waste Requests</h5>
+                </div>
+                <div class="card-body px-4">
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle">
+                            <thead class="table-light">
+                                <tr>
+                                    <th>Waste Type</th>
+                                    <th>Quantity</th>
+                                    <th>Status</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for req in requests %}
+                                <tr>
+                                    <td class="fw-semibold">{{ req.waste_type.name }}</td>
+                                    <td>{{ req.quantity }} {{ req.unit }}</td>
+                                    <td>
+                                        <span class="badge rounded-pill
+                                            {% if req.status == 'approved' %}bg-success
+                                            {% elif req.status == 'pending' %}bg-warning text-dark
+                                            {% elif req.status == 'fulfilled' %}bg-info
+                                            {% else %}bg-danger{% endif %}">
+                                            {{ req.get_status_display }}
+                                        </span>
+                                    </td>
+                                    <td class="text-muted small">{{ req.created_at|date:"M d, Y" }}</td>
+                                </tr>
+                                {% empty %}
+                                <tr>
+                                    <td colspan="4" class="text-center py-4 text-muted">
+                                        <i class="fas fa-inbox fa-2x mb-2 d-block"></i>
+                                        No requests yet.
+                                        <a href="{% url 'create_waste_request' %}" class="d-block mt-2 text-success">Create your first request</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-    <h3>Your Waste Requests</h3>
-    <div class="table-responsive">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Waste Type</th>
-                    <th>Quantity</th>
-                    <th>Status</th>
-                    <th>Created</th>
-                </tr>
-            </thead>
-            <tbody>
-                {% for request in requests %}
-                <tr>
-                    <td>{{ request.waste_type.name }}</td>
-                    <td>{{ request.quantity }} {{ request.unit }}</td>
-                    <td>
-                        <span class="badge bg-{% if request.status == 'approved' %}success{% elif request.status == 'pending' %}warning{% else %}info{% endif %}">
-                            {{ request.get_status_display }}
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+            <!-- Live Inventory -->
+            {% if live_inventory %}
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-header bg-transparent border-0 pt-4 px-4 d-flex justify-content-between align-items-center">
+                    <h6 class="fw-bold mb-0">📦 Waste Available Now</h6>
+                    <a href="{% url 'available_waste' %}" class="btn btn-sm btn-outline-success">View All</a>
+                </div>
+                <div class="card-body px-4 pb-3">
+                    {% for item in live_inventory %}
+                    <div class="d-flex align-items-center justify-content-between py-2 border-bottom">
+                        <div class="d-flex align-items-center gap-2">
+                            <span style="font-size:1.3rem;">{{ item.waste_type.icon }}</span>
+                            <span class="fw-semibold small">{{ item.waste_type.name }}</span>
+                        </div>
+                        <span class="badge bg-success-subtle text-success fw-bold">
+                            {{ item.available_quantity }} {{ item.unit }}
                         </span>
-                    </td>
-                    <td>{{ request.created_at|date:"M d, Y" }}</td>
-                </tr>
-                {% empty %}
-                <tr>
-                    <td colspan="4" class="text-center">No requests yet</td>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                    </div>
+                    {% endfor %}
+                    <div class="pt-3">
+                        <a href="{% url 'create_waste_request' %}" class="btn btn-success w-100 btn-sm">
+                            <i class="fas fa-plus me-1"></i>Request Material
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% else %}
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4 text-center text-muted">
+                    <i class="fas fa-boxes fa-2x mb-2 opacity-50"></i>
+                    <p class="small mb-2">No waste in stock yet.</p>
+                    <p class="small">Stock updates automatically when pickups are completed.</p>
+                </div>
+            </div>
+            {% endif %}
+            <!-- Chart -->
+            {% if waste_breakdown %}
+            <div class="card border-0 shadow-sm rounded-4 mb-4">
+                <div class="card-body p-4">
+                    <h6 class="fw-bold mb-3">📊 Requests by Waste Type</h6>
+                    <canvas id="wasteChart" height="200"></canvas>
+                </div>
+            </div>
+            {% endif %}
+
+            <!-- Notifications -->
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-transparent border-0 pt-4 px-4">
+                    <h6 class="fw-bold mb-0">🔔 Notifications</h6>
+                </div>
+                <div class="card-body px-4 pb-4">
+                    {% for notif in recent_notifs %}
+                    <div class="notif-item {% if not notif.is_read %}notif-unread{% endif %} p-2 rounded-3 mb-2">
+                        <div class="small">{{ notif.message }}</div>
+                        <div class="text-muted" style="font-size:11px;">{{ notif.created_at|timesince }} ago</div>
+                    </div>
+                    {% empty %}
+                    <p class="text-muted small text-center py-2">No notifications yet.</p>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+{% if waste_breakdown %}
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+const ctx = document.getElementById('wasteChart').getContext('2d');
+new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+        labels: [{% for w in waste_breakdown %}'{{ w.waste_type__name }}'{% if not forloop.last %},{% endif %}{% endfor %}],
+        datasets: [{
+            data: [{% for w in waste_breakdown %}{{ w.count }}{% if not forloop.last %},{% endif %}{% endfor %}],
+            backgroundColor: ['#28a745','#0d6efd','#ffc107','#dc3545','#17a2b8','#6f42c1'],
+            borderWidth: 0,
+        }]
+    },
+    options: {
+        plugins: { legend: { position: 'bottom', labels: { boxWidth: 12 } } },
+        cutout: '65%',
+    }
+});
+</script>
+{% endif %}
 {% endblock %}

@@ -1,37 +1,119 @@
 {% extends 'base.html' %}
-{% block title %}Pickup Details{% endblock %}
+{% block title %}Pickup Details - EcoWaste{% endblock %}
 
 {% block content %}
 <div class="container my-5">
-    <div class="card">
-        <div class="card-header bg-success text-white">
-            <h3>Pickup Request Details</h3>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-6">
-                    <p><strong>Waste Type:</strong> {{ pickup.waste_type.name }}</p>
-                    <p><strong>Location:</strong> {{ pickup.location }}</p>
-                    <p><strong>Pickup Date:</strong> {{ pickup.pickup_date }}</p>
-                    <p><strong>Pickup Time:</strong> {{ pickup.pickup_time|default:"Not specified" }}</p>
-                </div>
-                <div class="col-md-6">
-                    <p><strong>Quantity Estimate:</strong> {{ pickup.quantity_estimate|default:"Not specified" }}</p>
-                    <p><strong>Status:</strong> 
-                        <span class="badge bg-{% if pickup.status == 'completed' %}success{% elif pickup.status == 'pending' %}warning{% else %}info{% endif %}">
-                            {{ pickup.get_status_display }}
+    <div class="row g-4">
+        <!-- Details Card -->
+        <div class="col-md-7">
+            <div class="card border-0 shadow-sm rounded-4">
+                <div class="card-header bg-success text-white rounded-top-4 p-4">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h4 class="fw-bold mb-0"><i class="fas fa-truck me-2"></i>Pickup Details</h4>
+                        <span class="badge bg-white text-success fs-6">
+                            {% if cancelled %}❌ Cancelled{% else %}{{ pickup.get_status_display }}{% endif %}
                         </span>
-                    </p>
-                    <p><strong>Created:</strong> {{ pickup.created_at|date:"M d, Y H:i" }}</p>
+                    </div>
+                </div>
+                <div class="card-body p-4">
+                    <div class="row g-3">
+                        <div class="col-6">
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fas fa-recycle me-1 text-success"></i>Waste Type</div>
+                                <div class="detail-value">{{ pickup.waste_type.name }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fas fa-map-marker-alt me-1 text-danger"></i>Location</div>
+                                <div class="detail-value">{{ pickup.location }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fas fa-calendar me-1 text-primary"></i>Pickup Date</div>
+                                <div class="detail-value">{{ pickup.pickup_date|date:"M d, Y" }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fas fa-clock me-1 text-warning"></i>Pickup Time</div>
+                                <div class="detail-value">{{ pickup.pickup_time|default:"Not specified" }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fas fa-weight me-1 text-info"></i>Quantity</div>
+                                <div class="detail-value">{{ pickup.quantity_estimate|default:"Not specified" }}</div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="detail-item">
+                                <div class="detail-label"><i class="fas fa-calendar-plus me-1 text-muted"></i>Submitted</div>
+                                <div class="detail-value">{{ pickup.created_at|date:"M d, Y H:i" }}</div>
+                            </div>
+                        </div>
+                    </div>
+                    {% if pickup.special_instructions %}
+                    <hr>
+                    <div class="detail-item">
+                        <div class="detail-label"><i class="fas fa-sticky-note me-1 text-warning"></i>Special Instructions</div>
+                        <div class="detail-value">{{ pickup.special_instructions }}</div>
+                    </div>
+                    {% endif %}
+                    <hr>
+                    <div class="d-flex gap-2">
+                        <a href="{% url 'user_dashboard' %}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-1"></i>Back
+                        </a>
+                        {% if pickup.status == 'pending' %}
+                        <a href="{% url 'cancel_pickup' pickup.id %}" class="btn btn-outline-danger"
+                           onclick="return confirm('Are you sure you want to cancel this pickup?')">
+                            <i class="fas fa-times me-1"></i>Cancel Pickup
+                        </a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
-            {% if pickup.special_instructions %}
-            <hr>
-            <p><strong>Special Instructions:</strong></p>
-            <p>{{ pickup.special_instructions }}</p>
-            {% endif %}
-            <hr>
-            <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Back to Dashboard</a>
+        </div>
+
+        <!-- Timeline -->
+        <div class="col-md-5">
+            <div class="card border-0 shadow-sm rounded-4 h-100">
+                <div class="card-body p-4">
+                    <h5 class="fw-bold mb-4">📍 Status Timeline</h5>
+                    {% if cancelled %}
+                    <div class="timeline-cancelled text-center py-4">
+                        <i class="fas fa-times-circle fa-3x text-danger mb-3"></i>
+                        <h6 class="text-danger fw-bold">Pickup Cancelled</h6>
+                        <p class="text-muted small">This pickup request was cancelled.</p>
+                    </div>
+                    {% else %}
+                    <div class="timeline">
+                        {% for step in timeline %}
+                        <div class="timeline-step {% if step.done %}done{% endif %} {% if step.active %}active{% endif %}">
+                            <div class="timeline-dot">
+                                {% if step.done %}<i class="fas fa-check"></i>{% else %}<i class="fas fa-circle"></i>{% endif %}
+                            </div>
+                            <div class="timeline-content">
+                                <div class="fw-semibold {% if step.active %}text-success{% elif step.done %}text-muted{% else %}text-muted opacity-50{% endif %}">
+                                    {{ step.label }}
+                                </div>
+                                {% if step.active %}<small class="text-success">Current Status</small>{% endif %}
+                            </div>
+                        </div>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+
+                    <div class="mt-4 p-3 bg-success-subtle rounded-3">
+                        <small class="text-success">
+                            <i class="fas fa-info-circle me-1"></i>
+                            Each completed pickup earns you <strong>10 reward points</strong>.
+                        </small>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>

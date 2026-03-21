@@ -2,98 +2,386 @@
 {% block title %}Recycling & Sustainability{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <h1 class="text-center mb-5">Recycling & Sustainability</h1>
-    
-    <div class="row mb-5">
-        <div class="col-md-12">
-            <h3>Our Recycling Methods</h3>
-            <p>We employ state-of-the-art recycling technologies to ensure maximum material recovery and minimal environmental impact.</p>
-        </div>
-    </div>
-
-    <div class="row">
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="text-success"><i class="fas fa-newspaper"></i> Paper Recycling</h5>
-                    <p>Paper is pulped, cleaned, and reformed into new paper products, saving trees and energy.</p>
+<!-- Hero Section -->
+<div class="recycling-hero text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-3 mb-3 animate-fade-in">Recycling & Sustainability</h1>
+        <p class="lead animate-fade-in" style="animation-delay: 0.2s">Together, we can create a cleaner, greener future</p>
+        <div class="hero-stats mt-5 animate-fade-in" style="animation-delay: 0.4s">
+            <div class="row">
+                <div class="col-md-4 mb-3">
+                    <div class="stat-box">
+                        <h2 class="display-4">60%</h2>
+                        <p>CO₂ Reduction</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="stat-box">
+                        <h2 class="display-4">5000+</h2>
+                        <p>Trees Saved</p>
+                    </div>
+                </div>
+                <div class="col-md-4 mb-3">
+                    <div class="stat-box">
+                        <h2 class="display-4">80%</h2>
+                        <p>Energy Saved</p>
+                    </div>
                 </div>
             </div>
-        </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="text-success"><i class="fas fa-bottle-water"></i> Plastic Recycling</h5>
-                    <p>Plastics are sorted, cleaned, melted, and reformed into new products or materials.</p>
-                </div>
-            </div>
-        </div>
-        
-        <div class="col-md-4 mb-4">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="text-success"><i class="fas fa-cog"></i> Metal Recycling</h5>
-                    <p>Metals are melted down and recast, requiring less energy than mining new materials.</p>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="bg-success text-white p-4 rounded my-5">
-        <h3 class="text-center">Environmental Impact</h3>
-        <div class="row text-center mt-4">
-            <div class="col-md-4">
-                <h2>60%</h2>
-                <p>Reduction in CO2 Emissions</p>
-            </div>
-            <div class="col-md-4">
-                <h2>5000+</h2>
-                <p>Trees Saved Annually</p>
-            </div>
-            <div class="col-md-4">
-                <h2>80%</h2>
-                <p>Energy Saved vs New Production</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="card">
-        <div class="card-body">
-            <h3>Waste Segregation Guidelines</h3>
-            <table class="table table-striped mt-3">
-                <thead>
-                    <tr>
-                        <th>Category</th>
-                        <th>Examples</th>
-                        <th>Bin Color</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>Recyclable</td>
-                        <td>Paper, Plastic, Metal, Glass</td>
-                        <td><span class="badge bg-primary">Blue</span></td>
-                    </tr>
-                    <tr>
-                        <td>Organic</td>
-                        <td>Food waste, Garden waste</td>
-                        <td><span class="badge bg-success">Green</span></td>
-                    </tr>
-                    <tr>
-                        <td>Hazardous</td>
-                        <td>Batteries, Chemicals, E-waste</td>
-                        <td><span class="badge bg-danger">Red</span></td>
-                    </tr>
-                    <tr>
-                        <td>General</td>
-                        <td>Non-recyclable items</td>
-                        <td><span class="badge bg-secondary">Black</span></td>
-                    </tr>
-                </tbody>
-            </table>
         </div>
     </div>
 </div>
+
+<!-- Recycling Methods -->
+<div class="container my-5">
+    <h2 class="text-center mb-5">Our Recycling Methods</h2>
+    <p class="text-center text-muted mb-5">State-of-the-art technologies for maximum material recovery</p>
+    
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="recycling-card">
+                <div class="recycling-icon">
+                    <i class="fas fa-newspaper fa-4x text-info"></i>
+                </div>
+                <h4 class="mt-3">Paper Recycling</h4>
+                <p class="text-muted">Paper is pulped, cleaned, and reformed into new paper products</p>
+                <div class="process-steps">
+                    <div class="step"><i class="fas fa-arrow-right text-info"></i> Collection</div>
+                    <div class="step"><i class="fas fa-arrow-right text-info"></i> Sorting</div>
+                    <div class="step"><i class="fas fa-arrow-right text-info"></i> Pulping</div>
+                    <div class="step"><i class="fas fa-arrow-right text-info"></i> New Products</div>
+                </div>
+                <div class="impact-badge">
+                    <i class="fas fa-tree"></i> Saves 17 trees per ton
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="recycling-card">
+                <div class="recycling-icon">
+                    <i class="fas fa-bottle-water fa-4x text-primary"></i>
+                </div>
+                <h4 class="mt-3">Plastic Recycling</h4>
+                <p class="text-muted">Plastics are sorted, cleaned, melted, and reformed</p>
+                <div class="process-steps">
+                    <div class="step"><i class="fas fa-arrow-right text-primary"></i> Collection</div>
+                    <div class="step"><i class="fas fa-arrow-right text-primary"></i> Sorting by type</div>
+                    <div class="step"><i class="fas fa-arrow-right text-primary"></i> Melting</div>
+                    <div class="step"><i class="fas fa-arrow-right text-primary"></i> Reforming</div>
+                </div>
+                <div class="impact-badge">
+                    <i class="fas fa-oil-can"></i> Saves 88% energy
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-4 mb-4">
+            <div class="recycling-card">
+                <div class="recycling-icon">
+                    <i class="fas fa-cog fa-4x text-secondary"></i>
+                </div>
+                <h4 class="mt-3">Metal Recycling</h4>
+                <p class="text-muted">Metals are melted down and recast into new products</p>
+                <div class="process-steps">
+                    <div class="step"><i class="fas fa-arrow-right text-secondary"></i> Collection</div>
+                    <div class="step"><i class="fas fa-arrow-right text-secondary"></i> Separation</div>
+                    <div class="step"><i class="fas fa-arrow-right text-secondary"></i> Melting</div>
+                    <div class="step"><i class="fas fa-arrow-right text-secondary"></i> Recasting</div>
+                </div>
+                <div class="impact-badge">
+                    <i class="fas fa-bolt"></i> Saves 95% energy
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Waste Types Section -->
+<div class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Materials We Recycle</h2>
+        <div class="row">
+            {% for waste_type in waste_types %}
+            <div class="col-md-3 col-sm-6 mb-4">
+                <div class="material-card">
+                    <div class="material-icon">
+                        {% if 'Plastic' in waste_type.name %}
+                            <i class="fas fa-bottle-water fa-3x text-primary"></i>
+                        {% elif 'Paper' in waste_type.name %}
+                            <i class="fas fa-newspaper fa-3x text-info"></i>
+                        {% elif 'Metal' in waste_type.name %}
+                            <i class="fas fa-cog fa-3x text-secondary"></i>
+                        {% elif 'Glass' in waste_type.name %}
+                            <i class="fas fa-wine-bottle fa-3x text-success"></i>
+                        {% elif 'E-waste' in waste_type.name or 'Electronic' in waste_type.name %}
+                            <i class="fas fa-laptop fa-3x text-danger"></i>
+                        {% elif 'Organic' in waste_type.name %}
+                            <i class="fas fa-leaf fa-3x text-success"></i>
+                        {% elif 'Hazardous' in waste_type.name %}
+                            <i class="fas fa-radiation fa-3x text-warning"></i>
+                        {% else %}
+                            <i class="fas fa-recycle fa-3x text-success"></i>
+                        {% endif %}
+                    </div>
+                    <h5 class="mt-3">{{ waste_type.name }}</h5>
+                    <p class="small text-muted">{{ waste_type.description|truncatewords:12 }}</p>
+                    <div class="recyclable-badge">
+                        <i class="fas fa-check-circle text-success"></i> Recyclable
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+
+<!-- Benefits Section -->
+<div class="container my-5">
+    <h2 class="text-center mb-5">Environmental Benefits</h2>
+    <div class="row">
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="benefit-box">
+                <div class="benefit-icon-circle bg-success">
+                    <i class="fas fa-tree fa-2x text-white"></i>
+                </div>
+                <h4 class="mt-3">Save Trees</h4>
+                <p class="text-muted">Recycling paper saves millions of trees annually</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="benefit-box">
+                <div class="benefit-icon-circle bg-primary">
+                    <i class="fas fa-water fa-2x text-white"></i>
+                </div>
+                <h4 class="mt-3">Conserve Water</h4>
+                <p class="text-muted">Reduces water consumption in manufacturing</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="benefit-box">
+                <div class="benefit-icon-circle bg-warning">
+                    <i class="fas fa-bolt fa-2x text-white"></i>
+                </div>
+                <h4 class="mt-3">Save Energy</h4>
+                <p class="text-muted">Uses less energy than producing new materials</p>
+            </div>
+        </div>
+        <div class="col-md-3 col-sm-6 mb-4">
+            <div class="benefit-box">
+                <div class="benefit-icon-circle bg-info">
+                    <i class="fas fa-smog fa-2x text-white"></i>
+                </div>
+                <h4 class="mt-3">Reduce Pollution</h4>
+                <p class="text-muted">Decreases air and water pollution significantly</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Segregation Guide -->
+<div class="bg-gradient-success text-white py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Quick Segregation Guide</h2>
+        <div class="row">
+            <div class="col-md-3 mb-3">
+                <div class="bin-guide">
+                    <div class="bin-icon bg-success">
+                        <i class="fas fa-recycle fa-3x"></i>
+                    </div>
+                    <h5 class="mt-3">Green Bin</h5>
+                    <p class="small">Recyclables: Paper, Plastic, Metal, Glass</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="bin-guide">
+                    <div class="bin-icon bg-warning">
+                        <i class="fas fa-leaf fa-3x"></i>
+                    </div>
+                    <h5 class="mt-3">Brown Bin</h5>
+                    <p class="small">Organic: Food waste, Garden waste</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="bin-guide">
+                    <div class="bin-icon bg-danger">
+                        <i class="fas fa-exclamation-triangle fa-3x"></i>
+                    </div>
+                    <h5 class="mt-3">Red Bin</h5>
+                    <p class="small">Hazardous: Batteries, Chemicals, E-waste</p>
+                </div>
+            </div>
+            <div class="col-md-3 mb-3">
+                <div class="bin-guide">
+                    <div class="bin-icon bg-dark">
+                        <i class="fas fa-trash fa-3x"></i>
+                    </div>
+                    <h5 class="mt-3">Black Bin</h5>
+                    <p class="small">General: Non-recyclable waste</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="container my-5 text-center">
+    <h2 class="mb-4">Start Recycling Today!</h2>
+    <p class="lead mb-4">Join our community and make a positive impact on the environment</p>
+    <a href="{% url 'create_pickup' %}" class="btn btn-success btn-lg me-3">
+        <i class="fas fa-calendar-check"></i> Schedule Pickup
+    </a>
+    <a href="{% url 'services' %}" class="btn btn-outline-success btn-lg">
+        <i class="fas fa-info-circle"></i> Learn More
+    </a>
+</div>
+
+<style>
+.recycling-hero {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    position: relative;
+    overflow: hidden;
+}
+.recycling-hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320"><path fill="%23ffffff" fill-opacity="0.1" d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"></path></svg>') bottom;
+    background-size: cover;
+}
+.stat-box {
+    background: rgba(255,255,255,0.1);
+    padding: 20px;
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+.recycling-card {
+    background: white;
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+}
+.recycling-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+}
+.recycling-icon {
+    transition: transform 0.3s ease;
+}
+.recycling-card:hover .recycling-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+.process-steps {
+    margin: 20px 0;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+}
+.process-steps .step {
+    font-size: 0.9rem;
+    margin: 5px 0;
+}
+.impact-badge {
+    background: #28a745;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    display: inline-block;
+    margin-top: 10px;
+}
+.material-card {
+    background: white;
+    padding: 25px;
+    border-radius: 15px;
+    text-align: center;
+    transition: all 0.3s ease;
+    height: 100%;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+}
+.material-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+.material-icon {
+    transition: transform 0.3s ease;
+}
+.material-card:hover .material-icon {
+    transform: scale(1.15);
+}
+.recyclable-badge {
+    margin-top: 15px;
+    padding: 5px 10px;
+    background: #d4edda;
+    border-radius: 15px;
+    font-size: 0.85rem;
+    display: inline-block;
+}
+.benefit-box {
+    text-align: center;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+.benefit-box:hover {
+    transform: translateY(-5px);
+}
+.benefit-icon-circle {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    transition: transform 0.3s ease;
+}
+.benefit-box:hover .benefit-icon-circle {
+    transform: scale(1.1) rotate(10deg);
+}
+.bg-gradient-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
+.bin-guide {
+    text-align: center;
+    padding: 20px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+.bin-guide:hover {
+    background: rgba(255,255,255,0.2);
+    transform: scale(1.05);
+}
+.bin-icon {
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.animate-fade-in {
+    animation: fadeInUp 0.8s ease forwards;
+    opacity: 0;
+}
+</style>
 {% endblock %}

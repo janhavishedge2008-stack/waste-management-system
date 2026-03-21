@@ -2,70 +2,294 @@
 {% block title %}How It Works{% endblock %}
 
 {% block content %}
-<div class="container my-5">
-    <h1 class="text-center mb-5">How It Works</h1>
-    
-    <div class="row">
-        <div class="col-md-3 text-center mb-4">
-            <div class="step-circle bg-success text-white mx-auto mb-3">1</div>
-            <h4>Register</h4>
-            <p>Create your account on our platform in minutes</p>
-        </div>
-        
-        <div class="col-md-3 text-center mb-4">
-            <div class="step-circle bg-success text-white mx-auto mb-3">2</div>
-            <h4>Segregate Waste</h4>
-            <p>Sort your waste into appropriate categories</p>
-        </div>
-        
-        <div class="col-md-3 text-center mb-4">
-            <div class="step-circle bg-success text-white mx-auto mb-3">3</div>
-            <h4>Schedule Pickup</h4>
-            <p>Choose a convenient date and time for collection</p>
-        </div>
-        
-        <div class="col-md-3 text-center mb-4">
-            <div class="step-circle bg-success text-white mx-auto mb-3">4</div>
-            <h4>We Collect</h4>
-            <p>Our team picks up and processes your waste responsibly</p>
-        </div>
+<!-- Hero Section -->
+<div class="bg-gradient-success text-white py-5">
+    <div class="container text-center">
+        <h1 class="display-4 mb-3">How It Works</h1>
+        <p class="lead">Simple, efficient, and eco-friendly waste management in 4 easy steps</p>
     </div>
+</div>
 
-    <div class="bg-light p-4 rounded mt-5">
-        <h3>Waste Segregation Guidelines</h3>
-        <div class="row mt-3">
-            <div class="col-md-6">
-                <h5 class="text-success">Recyclable Waste</h5>
-                <ul>
-                    <li>Paper and cardboard</li>
-                    <li>Plastic bottles and containers</li>
-                    <li>Metal cans and foil</li>
-                    <li>Glass bottles and jars</li>
-                </ul>
+<!-- Steps Section -->
+<div class="container my-5">
+    <div class="row position-relative">
+        <!-- Progress Line -->
+        <div class="progress-line"></div>
+        
+        <div class="col-md-3 text-center mb-4">
+            <div class="step-container">
+                <div class="step-circle bg-success text-white mx-auto mb-3 animate-step">
+                    <i class="fas fa-user-plus fa-2x"></i>
+                </div>
+                <div class="step-number">Step 1</div>
+                <h4 class="mt-3">Register</h4>
+                <p class="text-muted">Create your free account in just 2 minutes. No credit card required!</p>
+                <div class="step-features">
+                    <small class="text-success"><i class="fas fa-check"></i> Quick signup</small><br>
+                    <small class="text-success"><i class="fas fa-check"></i> Email verification</small><br>
+                    <small class="text-success"><i class="fas fa-check"></i> Profile setup</small>
+                </div>
             </div>
-            <div class="col-md-6">
-                <h5 class="text-success">Non-Recyclable Waste</h5>
-                <ul>
-                    <li>Food waste (compostable)</li>
-                    <li>Contaminated materials</li>
-                    <li>Certain plastics</li>
-                    <li>Medical waste</li>
-                </ul>
+        </div>
+        
+        <div class="col-md-3 text-center mb-4">
+            <div class="step-container">
+                <div class="step-circle bg-success text-white mx-auto mb-3 animate-step" style="animation-delay: 0.2s">
+                    <i class="fas fa-sort-amount-up fa-2x"></i>
+                </div>
+                <div class="step-number">Step 2</div>
+                <h4 class="mt-3">Segregate Waste</h4>
+                <p class="text-muted">Sort your waste into appropriate categories for better recycling</p>
+                <div class="step-features">
+                    <small class="text-success"><i class="fas fa-check"></i> Easy guidelines</small><br>
+                    <small class="text-success"><i class="fas fa-check"></i> Color-coded bins</small><br>
+                    <small class="text-success"><i class="fas fa-check"></i> Help available</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 text-center mb-4">
+            <div class="step-container">
+                <div class="step-circle bg-success text-white mx-auto mb-3 animate-step" style="animation-delay: 0.4s">
+                    <i class="fas fa-calendar-check fa-2x"></i>
+                </div>
+                <div class="step-number">Step 3</div>
+                <h4 class="mt-3">Schedule Pickup</h4>
+                <p class="text-muted">Choose a convenient date and time that works for you</p>
+                <div class="step-features">
+                    <small class="text-success"><i class="fas fa-check"></i> Flexible timing</small><br>
+                    <small class="text-success"><i class="fas fa-check"></i> Same-day option</small><br>
+                    <small class="text-success"><i class="fas fa-check"></i> SMS reminders</small>
+                </div>
+            </div>
+        </div>
+        
+        <div class="col-md-3 text-center mb-4">
+            <div class="step-container">
+                <div class="step-circle bg-success text-white mx-auto mb-3 animate-step" style="animation-delay: 0.6s">
+                    <i class="fas fa-truck fa-2x"></i>
+                </div>
+                <div class="step-number">Step 4</div>
+                <h4 class="mt-3">We Collect</h4>
+                <p class="text-muted">Our team picks up and processes your waste responsibly</p>
+                <div class="step-features">
+                    <small class="text-success"><i class="fas fa-check"></i> Doorstep pickup</small><br>
+                    <small class="text-success"><i class="fas fa-check"></i> Eco-friendly</small><br>
+                    <small class="text-success"><i class="fas fa-check"></i> Earn rewards</small>
+                </div>
             </div>
         </div>
     </div>
 </div>
 
+<!-- Segregation Guidelines -->
+<div class="bg-light py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Waste Segregation Guidelines</h2>
+        <div class="row">
+            <div class="col-md-6 mb-4">
+                <div class="card border-success h-100 guideline-card">
+                    <div class="card-header bg-success text-white">
+                        <h5 class="mb-0"><i class="fas fa-recycle"></i> Recyclable Waste (Green Bin)</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Paper and cardboard</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Plastic bottles and containers</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Metal cans and foil</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Glass bottles and jars</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-success"></i> Clean packaging materials</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card border-warning h-100 guideline-card">
+                    <div class="card-header bg-warning text-dark">
+                        <h5 class="mb-0"><i class="fas fa-leaf"></i> Organic Waste (Brown Bin)</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-check-circle text-warning"></i> Food scraps and leftovers</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-warning"></i> Fruit and vegetable peels</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-warning"></i> Garden waste and leaves</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-warning"></i> Coffee grounds and tea bags</li>
+                            <li class="list-group-item"><i class="fas fa-check-circle text-warning"></i> Biodegradable materials</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card border-danger h-100 guideline-card">
+                    <div class="card-header bg-danger text-white">
+                        <h5 class="mb-0"><i class="fas fa-exclamation-triangle"></i> Hazardous Waste (Red Bin)</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-times-circle text-danger"></i> Batteries and electronics</li>
+                            <li class="list-group-item"><i class="fas fa-times-circle text-danger"></i> Paint and chemicals</li>
+                            <li class="list-group-item"><i class="fas fa-times-circle text-danger"></i> Medical waste</li>
+                            <li class="list-group-item"><i class="fas fa-times-circle text-danger"></i> Light bulbs and tubes</li>
+                            <li class="list-group-item"><i class="fas fa-times-circle text-danger"></i> Pesticides and cleaners</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="col-md-6 mb-4">
+                <div class="card border-secondary h-100 guideline-card">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="mb-0"><i class="fas fa-trash"></i> General Waste (Black Bin)</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-group list-group-flush">
+                            <li class="list-group-item"><i class="fas fa-minus-circle text-secondary"></i> Contaminated materials</li>
+                            <li class="list-group-item"><i class="fas fa-minus-circle text-secondary"></i> Non-recyclable plastics</li>
+                            <li class="list-group-item"><i class="fas fa-minus-circle text-secondary"></i> Broken ceramics</li>
+                            <li class="list-group-item"><i class="fas fa-minus-circle text-secondary"></i> Disposable diapers</li>
+                            <li class="list-group-item"><i class="fas fa-minus-circle text-secondary"></i> Mixed waste items</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Benefits Section -->
+<div class="container my-5">
+    <h2 class="text-center mb-5">Why Choose Our Service?</h2>
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="benefit-card text-center p-4">
+                <div class="benefit-icon mb-3">
+                    <i class="fas fa-clock fa-3x text-success"></i>
+                </div>
+                <h4>Save Time</h4>
+                <p>No need to visit disposal centers. We come to you at your convenience.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="benefit-card text-center p-4">
+                <div class="benefit-icon mb-3">
+                    <i class="fas fa-dollar-sign fa-3x text-success"></i>
+                </div>
+                <h4>Earn Rewards</h4>
+                <p>Get reward points for every pickup that you can redeem for discounts.</p>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="benefit-card text-center p-4">
+                <div class="benefit-icon mb-3">
+                    <i class="fas fa-globe fa-3x text-success"></i>
+                </div>
+                <h4>Help Environment</h4>
+                <p>Contribute to a cleaner planet through proper waste management.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- CTA Section -->
+<div class="bg-success text-white py-5">
+    <div class="container text-center">
+        <h2 class="mb-4">Ready to Make a Difference?</h2>
+        <p class="lead mb-4">Join thousands of users who are making waste management easy and eco-friendly</p>
+        <a href="{% url 'register_user' %}" class="btn btn-light btn-lg me-3">
+            <i class="fas fa-user-plus"></i> Sign Up Now
+        </a>
+        <a href="{% url 'create_pickup' %}" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-calendar-check"></i> Schedule Pickup
+        </a>
+    </div>
+</div>
+
 <style>
+.bg-gradient-success {
+    background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+}
 .step-circle {
-    width: 80px;
-    height: 80px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
+    position: relative;
+    z-index: 2;
+}
+.step-container {
+    position: relative;
+    padding: 20px;
+    transition: transform 0.3s ease;
+}
+.step-container:hover {
+    transform: translateY(-10px);
+}
+.step-number {
     font-weight: bold;
+    color: #28a745;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+}
+.step-features {
+    margin-top: 15px;
+    padding-top: 15px;
+    border-top: 2px solid #e9ecef;
+}
+.progress-line {
+    position: absolute;
+    top: 70px;
+    left: 12.5%;
+    right: 12.5%;
+    height: 3px;
+    background: linear-gradient(to right, #28a745, #20c997);
+    z-index: 1;
+}
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+.animate-step {
+    animation: fadeInUp 0.6s ease forwards;
+    opacity: 0;
+}
+.guideline-card {
+    transition: all 0.3s ease;
+}
+.guideline-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.15);
+}
+.benefit-card {
+    background: #f8f9fa;
+    border-radius: 15px;
+    transition: all 0.3s ease;
+}
+.benefit-card:hover {
+    background: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+}
+.benefit-icon {
+    transition: transform 0.3s ease;
+}
+.benefit-card:hover .benefit-icon {
+    transform: scale(1.1) rotate(5deg);
+}
+@media (max-width: 768px) {
+    .progress-line {
+        display: none;
+    }
 }
 </style>
 {% endblock %}

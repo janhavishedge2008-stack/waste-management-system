@@ -2,22 +2,205 @@
 {% load crispy_forms_tags %}
 {% block title %}Schedule Pickup{% endblock %}
 
+{% block extra_head %}
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+<style>
+#map { height: 300px; border-radius: 10px; border: 1px solid #dee2e6; margin-bottom: 12px; }
+.category-card {
+    border: 2px solid #dee2e6; border-radius: 10px; padding: 12px;
+    cursor: pointer; transition: all 0.2s; text-align: center;
+}
+.category-card:hover, .category-card.selected { border-color: #28a745; background: #f0fdf4; }
+.category-card .icon { font-size: 1.8rem; }
+.category-card .label { font-size: 0.8rem; font-weight: 600; margin-top: 4px; }
+</style>
+{% endblock %}
+
 {% block content %}
 <div class="container my-5">
     <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow">
-                <div class="card-body">
-                    <h2 class="mb-4">Schedule Waste Pickup</h2>
-                    <form method="post">
+        <div class="col-md-9">
+            <div class="card shadow border-0">
+                <div class="card-body p-4">
+                    <h2 class="mb-1">🗑️ Schedule Waste Pickup</h2>
+                    <p class="text-muted small mb-4">Fill in the details below. Your pickup will be auto-assigned to a company.</p>
+
+                    <form method="post" enctype="multipart/form-data">
                         {% csrf_token %}
-                        {{ form|crispy }}
-                        <button type="submit" class="btn btn-success">Submit Request</button>
-                        <a href="{% url 'user_dashboard' %}" class="btn btn-secondary">Cancel</a>
+
+                        <!-- Waste Type & Category -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">
+                                {{ form.waste_type|as_crispy_field }}
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-semibold">Waste Category</label>
+                                <div class="row g-2" id="category-grid">
+                                    <div class="col-4">
+                                        <div class="category-card" data-value="recyclable" onclick="selectCategory(this)">
+                                            <div class="icon">♻️</div>
+                                            <div class="label">Recyclable</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="category-card" data-value="non_recyclable" onclick="selectCategory(this)">
+                                            <div class="icon">🗑️</div>
+                                            <div class="label">Non-Recyclable</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="category-card" data-value="hazardous" onclick="selectCategory(this)">
+                                            <div class="icon">☢️</div>
+                                            <div class="label">Hazardous</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="category-card" data-value="organic" onclick="selectCategory(this)">
+                                            <div class="icon">🌿</div>
+                                            <div class="label">Organic</div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <div class="category-card" data-value="electronic" onclick="selectCategory(this)">
+                                            <div class="icon">💻</div>
+                                            <div class="label">E-Waste</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Hidden select for form submission -->
+                                <div style="display:none;">{{ form.waste_category }}</div>
+                            </div>
+                        </div>
+
+                        <!-- Location + Map -->
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">📍 Pickup Location</label>
+                            {{ form.location }}
+                            <div class="form-text">Type your address above, or click on the map to pin your location.</div>
+                        </div>
+
+                        <div id="map"></div>
+                        {{ form.latitude }}
+                        {{ form.longitude }}
+
+                        <!-- Date & Time -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">{{ form.pickup_date|as_crispy_field }}</div>
+                            <div class="col-md-6">{{ form.pickup_time|as_crispy_field }}</div>
+                        </div>
+
+                        <!-- Quantity & Instructions -->
+                        <div class="row g-3 mb-3">
+                            <div class="col-md-6">{{ form.quantity_estimate|as_crispy_field }}</div>
+                            <div class="col-md-6">{{ form.special_instructions|as_crispy_field }}</div>
+                        </div>
+
+                        <!-- Waste Image Upload -->
+                        <div class="mb-4">
+                            <label class="form-label fw-semibold">📷 Waste Image (optional)</label>
+                            <div class="border rounded p-3 text-center" id="image-drop-zone" style="cursor:pointer; background:#fafafa;">
+                                <div id="image-preview-wrap" style="display:none;">
+                                    <img id="image-preview" src="" style="max-height:160px; border-radius:8px;" />
+                                    <br><small class="text-muted mt-1 d-block">Click to change</small>
+                                </div>
+                                <div id="image-placeholder">
+                                    <div style="font-size:2rem;">📷</div>
+                                    <div class="text-muted small">Upload a photo of your waste for better identification</div>
+                                </div>
+                                {{ form.waste_image }}
+                            </div>
+                        </div>
+
+                        <div class="d-flex gap-2">
+                            <button type="submit" class="btn btn-success px-4">🚀 Submit Request</button>
+                            <a href="{% url 'user_dashboard' %}" class="btn btn-outline-secondary">Cancel</a>
+                        </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<script>
+// ── Leaflet Map ──────────────────────────────────────────────────────────────
+var map = L.map('map').setView([20.5937, 78.9629], 5); // India default
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+}).addTo(map);
+
+var marker = null;
+var latInput = document.getElementById('id_latitude');
+var lngInput = document.getElementById('id_longitude');
+var locInput = document.querySelector('[name="location"]');
+
+// Try to get user's location
+if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(pos) {
+        var lat = pos.coords.latitude, lng = pos.coords.longitude;
+        map.setView([lat, lng], 14);
+        placeMarker(lat, lng);
+    });
+}
+
+map.on('click', function(e) {
+    placeMarker(e.latlng.lat, e.latlng.lng);
+    // Reverse geocode with Nominatim
+    fetch(`https://nominatim.openstreetmap.org/reverse?lat=${e.latlng.lat}&lon=${e.latlng.lng}&format=json`)
+        .then(r => r.json())
+        .then(data => {
+            if (data.display_name && locInput) {
+                locInput.value = data.display_name.substring(0, 255);
+            }
+        }).catch(() => {});
+});
+
+function placeMarker(lat, lng) {
+    if (marker) map.removeLayer(marker);
+    marker = L.marker([lat, lng]).addTo(map);
+    latInput.value = lat.toFixed(6);
+    lngInput.value = lng.toFixed(6);
+}
+
+// ── Waste Category Selector ──────────────────────────────────────────────────
+function selectCategory(el) {
+    document.querySelectorAll('.category-card').forEach(c => c.classList.remove('selected'));
+    el.classList.add('selected');
+    var sel = document.getElementById('id_waste_category');
+    if (sel) sel.value = el.dataset.value;
+}
+
+// Pre-select if form has value
+var existingCat = document.getElementById('id_waste_category');
+if (existingCat && existingCat.value) {
+    var card = document.querySelector(`.category-card[data-value="${existingCat.value}"]`);
+    if (card) card.classList.add('selected');
+}
+
+// ── Image Preview ────────────────────────────────────────────────────────────
+var fileInput = document.getElementById('id_waste_image');
+var dropZone = document.getElementById('image-drop-zone');
+var preview = document.getElementById('image-preview');
+var previewWrap = document.getElementById('image-preview-wrap');
+var placeholder = document.getElementById('image-placeholder');
+
+if (fileInput) {
+    fileInput.style.display = 'none';
+    dropZone.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', function() {
+        if (this.files && this.files[0]) {
+            var reader = new FileReader();
+            reader.onload = e => {
+                preview.src = e.target.result;
+                previewWrap.style.display = 'block';
+                placeholder.style.display = 'none';
+            };
+            reader.readAsDataURL(this.files[0]);
+        }
+    });
+}
+</script>
 {% endblock %}

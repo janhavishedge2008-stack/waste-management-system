@@ -1,73 +1,236 @@
 {% extends 'base.html' %}
-{% block title %}Home - Waste Management System{% endblock %}
+{% block title %}EcoWaste - Smart Waste Management{% endblock %}
 
 {% block content %}
-<div class="hero-section bg-success text-white py-5">
-    <div class="container text-center">
-        <h1 class="display-4 mb-4">Eco-Friendly Waste Management Solutions</h1>
-        <p class="lead mb-4">Join us in creating a cleaner, greener future through responsible waste disposal and recycling</p>
-        <div class="mt-4">
-            <a href="{% url 'create_pickup' %}" class="btn btn-light btn-lg me-3">
-                <i class="fas fa-calendar-check"></i> Schedule Pickup
+<!-- Hero -->
+<section class="hero-section position-relative overflow-hidden">
+    <div class="hero-particles" id="particles"></div>
+    <div class="container position-relative z-1 text-center py-5">
+        <span class="badge bg-success-subtle text-success px-3 py-2 rounded-pill mb-3 fs-6">
+            🌱 Sustainable Waste Management
+        </span>
+        <h1 class="display-3 fw-bold text-white mb-4">
+            Recycle Smarter.<br>
+            <span class="text-gradient">Live Greener.</span>
+        </h1>
+        <p class="lead text-white-50 mb-5 mx-auto" style="max-width:600px;">
+            Join thousands of users building a cleaner future through responsible waste disposal, recycling, and reward-based sustainability.
+        </p>
+        <div class="d-flex flex-wrap gap-3 justify-content-center">
+            <a href="{% url 'create_pickup' %}" class="btn btn-light btn-lg px-5 fw-bold shadow">
+                <i class="fas fa-calendar-check me-2 text-success"></i>Schedule Pickup
             </a>
-            <a href="{% url 'company_tieup' %}" class="btn btn-outline-light btn-lg">
-                <i class="fas fa-handshake"></i> Join as Company
+            <a href="{% url 'company_tieup' %}" class="btn btn-outline-light btn-lg px-5">
+                <i class="fas fa-handshake me-2"></i>Join as Company
             </a>
+        </div>
+        <div class="mt-5 d-flex flex-wrap justify-content-center gap-4 text-white-50 small">
+            <span><i class="fas fa-check-circle text-success me-1"></i>Free Pickup</span>
+            <span><i class="fas fa-check-circle text-success me-1"></i>Earn Rewards</span>
+            <span><i class="fas fa-check-circle text-success me-1"></i>Track Status</span>
+            <span><i class="fas fa-check-circle text-success me-1"></i>Eco Certified</span>
+        </div>
+    </div>
+    <div class="hero-wave">
+        <svg viewBox="0 0 1440 80" preserveAspectRatio="none"><path d="M0,40 C360,80 1080,0 1440,40 L1440,80 L0,80 Z" fill="var(--bs-body-bg)"/></svg>
+    </div>
+</section>
+
+<!-- Tip of the Day -->
+{% if tip %}
+<div class="container my-4">
+    <div class="tip-banner d-flex align-items-center gap-3 p-3 rounded-3 shadow-sm">
+        <span class="tip-icon">💡</span>
+        <div>
+            <strong class="text-success">Tip of the Day:</strong>
+            <span class="ms-2">{{ tip.tip }}</span>
         </div>
     </div>
 </div>
+{% endif %}
 
-<div class="container my-5">
-    <div class="row text-center">
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow">
-                <div class="card-body">
-                    <i class="fas fa-recycle fa-3x text-success mb-3"></i>
-                    <h4>Recycling Services</h4>
-                    <p>Professional recycling solutions for all types of waste materials</p>
-                </div>
+<!-- Stats -->
+<section class="container my-5">
+    <div class="row g-4 text-center">
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-4 rounded-4 shadow-sm h-100">
+                <div class="stat-icon mb-3"><i class="fas fa-truck"></i></div>
+                <div class="stat-number counter" data-target="{{ total_pickups }}">0</div>
+                <div class="stat-label">Total Pickups</div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow">
-                <div class="card-body">
-                    <i class="fas fa-truck fa-3x text-success mb-3"></i>
-                    <h4>Scheduled Pickups</h4>
-                    <p>Convenient waste collection at your doorstep on your schedule</p>
-                </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-4 rounded-4 shadow-sm h-100">
+                <div class="stat-icon mb-3"><i class="fas fa-check-circle"></i></div>
+                <div class="stat-number counter" data-target="{{ completed_pickups }}">0</div>
+                <div class="stat-label">Completed</div>
             </div>
         </div>
-        <div class="col-md-4 mb-4">
-            <div class="card h-100 shadow">
-                <div class="card-body">
-                    <i class="fas fa-leaf fa-3x text-success mb-3"></i>
-                    <h4>Eco-Friendly</h4>
-                    <p>Sustainable practices that protect our environment</p>
-                </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-4 rounded-4 shadow-sm h-100">
+                <div class="stat-icon mb-3"><i class="fas fa-recycle"></i></div>
+                <div class="stat-number counter" data-target="{{ waste_types_count }}">0</div>
+                <div class="stat-label">Waste Types</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="stat-card p-4 rounded-4 shadow-sm h-100">
+                <div class="stat-icon mb-3"><i class="fas fa-users"></i></div>
+                <div class="stat-number counter" data-target="{{ total_users }}">0</div>
+                <div class="stat-label">Happy Users</div>
             </div>
         </div>
     </div>
-</div>
+</section>
 
-<div class="bg-light py-5">
+<!-- Features -->
+<section class="bg-body-secondary py-5">
     <div class="container">
-        <h2 class="text-center mb-4">Why Choose Us?</h2>
-        <div class="row">
-            <div class="col-md-6">
-                <ul class="list-unstyled">
-                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> 24/7 Customer Support</li>
-                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Certified Waste Management</li>
-                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Reward Points System</li>
-                </ul>
+        <div class="text-center mb-5">
+            <h2 class="fw-bold">What We Offer</h2>
+            <p class="text-muted">Everything you need for responsible waste management</p>
+        </div>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card p-4 rounded-4 h-100 text-center">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-calendar-check"></i></div>
+                    <h5 class="fw-bold">Scheduled Pickups</h5>
+                    <p class="text-muted">Book a pickup at your convenience. We come to your doorstep on your schedule.</p>
+                    <a href="{% url 'create_pickup' %}" class="btn btn-sm btn-outline-success mt-2">Book Now</a>
+                </div>
             </div>
-            <div class="col-md-6">
-                <ul class="list-unstyled">
-                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Company Partnerships</li>
-                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Environmental Impact Tracking</li>
-                    <li class="mb-3"><i class="fas fa-check-circle text-success"></i> Flexible Pricing Plans</li>
-                </ul>
+            <div class="col-md-4">
+                <div class="feature-card p-4 rounded-4 h-100 text-center">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-star"></i></div>
+                    <h5 class="fw-bold">Reward Points</h5>
+                    <p class="text-muted">Earn points for every pickup. Climb the leaderboard and unlock Bronze, Silver, Gold, Platinum levels.</p>
+                    <a href="{% url 'leaderboard' %}" class="btn btn-sm btn-outline-warning mt-2">View Leaderboard</a>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card p-4 rounded-4 h-100 text-center">
+                    <div class="feature-icon mx-auto mb-3"><i class="fas fa-handshake"></i></div>
+                    <h5 class="fw-bold">Company Partnerships</h5>
+                    <p class="text-muted">Companies can source recycled materials directly, reducing costs and environmental impact.</p>
+                    <a href="{% url 'company_tieup' %}" class="btn btn-sm btn-outline-primary mt-2">Partner With Us</a>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</section>
+
+<!-- How it works quick -->
+<section class="container my-5">
+    <div class="text-center mb-5">
+        <h2 class="fw-bold">How It Works</h2>
+        <p class="text-muted">Get started in 3 simple steps</p>
+    </div>
+    <div class="row g-4 align-items-center">
+        <div class="col-md-4 text-center">
+            <div class="step-bubble mx-auto mb-3">1</div>
+            <h5 class="fw-bold">Register</h5>
+            <p class="text-muted">Create your free account in under a minute.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="step-bubble mx-auto mb-3">2</div>
+            <h5 class="fw-bold">Schedule</h5>
+            <p class="text-muted">Pick a date, select waste type, and submit your request.</p>
+        </div>
+        <div class="col-md-4 text-center">
+            <div class="step-bubble mx-auto mb-3">3</div>
+            <h5 class="fw-bold">Earn & Track</h5>
+            <p class="text-muted">Get reward points and track your pickup in real time.</p>
+        </div>
+    </div>
+    <div class="text-center mt-4">
+        <a href="{% url 'how_it_works' %}" class="btn btn-success px-5">Learn More</a>
+    </div>
+</section>
+
+<!-- Blog -->
+{% if recent_blogs %}
+<section class="bg-body-secondary py-5">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="fw-bold mb-0">Latest from Our Blog</h2>
+            <a href="{% url 'blog' %}" class="btn btn-outline-success btn-sm">View All</a>
+        </div>
+        <div class="row g-4">
+            {% for post in recent_blogs %}
+            <div class="col-md-4">
+                <div class="blog-card card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
+                    <div class="blog-card-header p-3">
+                        <span class="badge bg-success-subtle text-success">Eco Tips</span>
+                    </div>
+                    <div class="card-body">
+                        <h5 class="card-title fw-bold">{{ post.title }}</h5>
+                        <p class="text-muted small mb-2">
+                            <i class="fas fa-user me-1"></i>{{ post.author }}
+                            <span class="ms-2"><i class="fas fa-calendar me-1"></i>{{ post.created_at|date:"M d, Y" }}</span>
+                        </p>
+                        <p class="card-text text-muted">{{ post.content|truncatewords:20 }}</p>
+                    </div>
+                    <div class="card-footer bg-transparent border-0 pb-3">
+                        <a href="{% url 'blog' %}" class="btn btn-sm btn-outline-success">Read More <i class="fas fa-arrow-right ms-1"></i></a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+{% endif %}
+
+<!-- Why Choose Us -->
+<section class="container my-5">
+    <div class="row align-items-center g-5">
+        <div class="col-md-6">
+            <h2 class="fw-bold mb-4">Why Choose EcoWaste?</h2>
+            <div class="d-flex flex-column gap-3">
+                {% for item in "1234"|make_list %}
+                {% if forloop.counter == 1 %}<div class="why-item d-flex gap-3 align-items-start"><div class="why-icon"><i class="fas fa-headset"></i></div><div><strong>24/7 Customer Support</strong><p class="text-muted mb-0 small">We're always here to help with any questions or issues.</p></div></div>{% endif %}
+                {% if forloop.counter == 2 %}<div class="why-item d-flex gap-3 align-items-start"><div class="why-icon"><i class="fas fa-certificate"></i></div><div><strong>Certified Waste Management</strong><p class="text-muted mb-0 small">All our processes meet environmental compliance standards.</p></div></div>{% endif %}
+                {% if forloop.counter == 3 %}<div class="why-item d-flex gap-3 align-items-start"><div class="why-icon"><i class="fas fa-trophy"></i></div><div><strong>Reward Points System</strong><p class="text-muted mb-0 small">Earn points for every pickup and climb the leaderboard.</p></div></div>{% endif %}
+                {% if forloop.counter == 4 %}<div class="why-item d-flex gap-3 align-items-start"><div class="why-icon"><i class="fas fa-chart-line"></i></div><div><strong>Environmental Impact Tracking</strong><p class="text-muted mb-0 small">See your personal contribution to a greener planet.</p></div></div>{% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="cta-box p-5 rounded-4 text-center text-white">
+                <i class="fas fa-leaf fa-3x mb-3 opacity-75"></i>
+                <h3 class="fw-bold">Ready to Go Green?</h3>
+                <p class="opacity-75 mb-4">Join our community and start making a difference today.</p>
+                {% if not user.is_authenticated %}
+                <a href="{% url 'register_user' %}" class="btn btn-light btn-lg fw-bold text-success px-5">Get Started Free</a>
+                {% else %}
+                <a href="{% url 'create_pickup' %}" class="btn btn-light btn-lg fw-bold text-success px-5">Schedule Pickup</a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+// Animated counter
+const counters = document.querySelectorAll('.counter');
+const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            const el = entry.target;
+            const target = parseInt(el.dataset.target);
+            let current = 0;
+            const step = Math.max(1, Math.ceil(target / 60));
+            const timer = setInterval(() => {
+                current = Math.min(current + step, target);
+                el.textContent = current.toLocaleString();
+                if (current >= target) clearInterval(timer);
+            }, 25);
+            observer.unobserve(el);
+        }
+    });
+}, { threshold: 0.5 });
+counters.forEach(c => observer.observe(c));
+</script>
 {% endblock %}

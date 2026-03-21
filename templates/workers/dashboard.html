@@ -1,0 +1,207 @@
+{% extends 'base.html' %}
+{% block title %}Worker Dashboard — EcoWaste{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4 px-4">
+
+    <!-- Header -->
+    <div class="d-flex align-items-center justify-content-between mb-4">
+        <div>
+            <h3 class="mb-0 fw-bold">🚛 Worker Dashboard</h3>
+            <p class="text-muted mb-0 small">Welcome back, <strong>{{ request.user.get_full_name|default:request.user.username }}</strong> — here are your assigned pickups.</p>
+        </div>
+        <a href="{% url 'logout' %}" class="btn btn-outline-danger btn-sm">Logout</a>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm text-center py-3">
+                <div style="font-size:1.8rem;">📋</div>
+                <div class="fs-2 fw-bold text-primary">{{ total_assigned }}</div>
+                <div class="text-muted small">Total Assigned</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm text-center py-3">
+                <div style="font-size:1.8rem;">⏳</div>
+                <div class="fs-2 fw-bold text-warning">{{ pending_count }}</div>
+                <div class="text-muted small">Pending</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm text-center py-3">
+                <div style="font-size:1.8rem;">🚛</div>
+                <div class="fs-2 fw-bold" style="color:#fd7e14;">{{ active_count }}</div>
+                <div class="text-muted small">Active</div>
+            </div>
+        </div>
+        <div class="col-6 col-md-3">
+            <div class="card border-0 shadow-sm text-center py-3">
+                <div style="font-size:1.8rem;">✅</div>
+                <div class="fs-2 fw-bold text-success">{{ completed_count }}</div>
+                <div class="text-muted small">Completed</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Active Pickups — needs action -->
+    {% if active_pickups %}
+    <div class="card shadow-sm border-0 mb-4">
+        <div class="card-header fw-bold text-dark" style="background:#fff3cd; border-bottom:2px solid #ffc107;">
+            🔥 Active Pickups — Action Required
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Waste</th>
+                            <th>Category</th>
+                            <th>Location</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in active_pickups %}
+                        <tr>
+                            <td><span class="badge bg-secondary">#{{ p.id }}</span></td>
+                            <td>
+                                <div class="fw-semibold">{{ p.user.username }}</div>
+                                <div class="text-muted small">{{ p.user.phone|default:"No phone" }}</div>
+                            </td>
+                            <td>{{ p.waste_type.icon }} {{ p.waste_type.name }}</td>
+                            <td>
+                                {% if p.waste_category %}
+                                <span class="badge
+                                    {% if p.waste_category == 'recyclable' %}bg-success
+                                    {% elif p.waste_category == 'hazardous' %}bg-danger
+                                    {% elif p.waste_category == 'electronic' %}bg-primary
+                                    {% elif p.waste_category == 'organic' %}bg-warning text-dark
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ p.get_waste_category_display }}
+                                </span>
+                                {% else %}<span class="text-muted">—</span>{% endif %}
+                            </td>
+                            <td>
+                                <div>{{ p.location|truncatechars:35 }}</div>
+                                {% if p.latitude and p.longitude %}
+                                <a href="https://www.google.com/maps?q={{ p.latitude }},{{ p.longitude }}" target="_blank" class="small text-success">📍 Open Map</a>
+                                {% endif %}
+                            </td>
+                            <td>{{ p.pickup_date }}</td>
+                            <td>
+                                {% if p.status == 'confirmed' %}
+                                <span class="badge bg-info">Confirmed</span>
+                                {% elif p.status == 'in_progress' %}
+                                <span class="badge bg-warning text-dark">In Progress</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if p.status == 'confirmed' %}
+                                <a href="{% url 'worker_update_status' p.id 'in_progress' %}"
+                                   class="btn btn-sm btn-warning fw-semibold"
+                                   onclick="return confirm('Start collecting this pickup?')">
+                                    🚛 Start
+                                </a>
+                                {% elif p.status == 'in_progress' %}
+                                <a href="{% url 'worker_update_status' p.id 'completed' %}"
+                                   class="btn btn-sm btn-success fw-semibold"
+                                   onclick="return confirm('Mark this pickup as completed?')">
+                                    ✅ Complete
+                                </a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+
+    <!-- All Assigned Pickups History -->
+    <div class="card shadow-sm border-0">
+        <div class="card-header fw-bold text-white" style="background:#28a745;">
+            📋 All Assigned Pickups
+        </div>
+        <div class="card-body p-0">
+            {% if assigned_pickups %}
+            <div class="table-responsive">
+                <table class="table table-hover align-middle mb-0">
+                    <thead class="table-light">
+                        <tr>
+                            <th>ID</th>
+                            <th>User</th>
+                            <th>Waste Type</th>
+                            <th>Category</th>
+                            <th>Location</th>
+                            <th>Pickup Date</th>
+                            <th>Qty</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for p in assigned_pickups %}
+                        <tr>
+                            <td><span class="badge bg-secondary">#{{ p.id }}</span></td>
+                            <td>
+                                <div class="fw-semibold">{{ p.user.username }}</div>
+                                <div class="text-muted small">{{ p.user.email }}</div>
+                            </td>
+                            <td>{{ p.waste_type.icon }} {{ p.waste_type.name }}</td>
+                            <td>
+                                {% if p.waste_category %}
+                                <span class="badge
+                                    {% if p.waste_category == 'recyclable' %}bg-success
+                                    {% elif p.waste_category == 'hazardous' %}bg-danger
+                                    {% elif p.waste_category == 'electronic' %}bg-primary
+                                    {% elif p.waste_category == 'organic' %}bg-warning text-dark
+                                    {% else %}bg-secondary{% endif %}">
+                                    {{ p.get_waste_category_display }}
+                                </span>
+                                {% else %}<span class="text-muted">—</span>{% endif %}
+                            </td>
+                            <td>
+                                {{ p.location|truncatechars:30 }}
+                                {% if p.latitude and p.longitude %}
+                                <br><a href="https://www.google.com/maps?q={{ p.latitude }},{{ p.longitude }}" target="_blank" class="small text-success">📍 Map</a>
+                                {% endif %}
+                            </td>
+                            <td>{{ p.pickup_date }}{% if p.pickup_time %}<br><small class="text-muted">{{ p.pickup_time }}</small>{% endif %}</td>
+                            <td>{{ p.quantity_estimate|default:"—" }}</td>
+                            <td>
+                                {% if p.status == 'pending' %}
+                                    <span class="badge bg-warning text-dark">⏳ Pending</span>
+                                {% elif p.status == 'confirmed' %}
+                                    <span class="badge bg-info">✅ Confirmed</span>
+                                {% elif p.status == 'in_progress' %}
+                                    <span class="badge bg-warning text-dark">🚛 In Progress</span>
+                                {% elif p.status == 'completed' %}
+                                    <span class="badge bg-success">🎉 Completed</span>
+                                {% elif p.status == 'cancelled' %}
+                                    <span class="badge bg-danger">❌ Cancelled</span>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            {% else %}
+            <div class="text-center py-5 text-muted">
+                <div style="font-size:3.5rem;">📭</div>
+                <h5 class="mt-2">No pickups assigned yet</h5>
+                <p class="small">The admin will assign pickups to you. Check back soon.</p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

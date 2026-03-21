@@ -52,6 +52,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'waste_management.wsgi.application'
 
+# PostgreSQL Configuration
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
@@ -63,7 +64,7 @@ DATABASES = {
     }
 }
 
-# Uncomment below to use SQLite instead of PostgreSQL
+# SQLite Configuration (commented out)
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.sqlite3',

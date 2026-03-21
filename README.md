@@ -1,111 +1,82 @@
 # Waste Management System
 
-A full-stack web application for managing waste collection, recycling, and company tie-ups.
+A comprehensive Django-based web application for managing waste collection, recycling, and company partnerships.
 
 ## Features
 
 - User registration and authentication
-- Waste pickup scheduling
+- Pickup request scheduling
 - Company waste material requests
-- Admin dashboard for management
-- Recycling information and education
-- Contact and support system
-
-## Technology Stack
-
-- **Frontend**: HTML, CSS, JavaScript, Bootstrap 5
-- **Backend**: Django 4.2.7
-- **Database**: SQLite (development)
+- Blog management with search
+- Dynamic statistics dashboard
+- Admin panel with analytics
+- PostgreSQL database
 
 ## Quick Start
 
-### 1. Start the Server
+### 1. Setup Database
+
+The database is already configured. If you need to recreate it:
+
+```bash
+venv\Scripts\python.exe setup_postgres_auto.py
+```
+
+### 2. Start Server
 
 ```bash
 START_SERVER.bat
 ```
 
-Or manually:
+Or:
 
 ```bash
-cd C:\Users\LENOVO\Desktop\new
-venv\Scripts\activate
-python manage.py runserver
+RUN_THIS.bat
 ```
 
-### 2. Access the Application
+### 3. Access Application
 
-- Homepage: http://localhost:8000
-- Admin Panel: http://localhost:8000/admin
+- Website: http://localhost:8000/
+- Admin Panel: http://localhost:8000/admin/
 - Login: admin / admin123
+
+## Database Configuration
+
+- Database: waste_management_db
+- User: waste_admin
+- Password: admin123
+- Host: localhost
+- Port: 5432
+
+## Technologies
+
+- Django 5.0
+- PostgreSQL 17
+- Bootstrap 5
+- Python 3.14
 
 ## Project Structure
 
 ```
 waste_management/
-├── core/              # Core app (home, about, contact)
-├── users/             # User authentication and profiles
-├── companies/         # Company registration and waste requests
-├── pickups/           # Waste pickup scheduling
+├── core/              # Home, blog, services
+├── users/             # User authentication
+├── companies/         # Company partnerships
+├── pickups/           # Pickup scheduling
 ├── templates/         # HTML templates
 ├── static/            # CSS, JS, images
-├── waste_management/  # Project settings
-└── manage.py          # Django management script
+└── waste_management/  # Project settings
 ```
 
-## Available Pages
+## Admin Features
 
-- Home
-- About Us
-- Services
-- How It Works
-- Book Pickup
-- Recycling & Sustainability
-- Company Tie-Up
-- Pricing/Plans
-- FAQ
-- Contact Us
-- User Dashboard
-- Company Dashboard
-- Admin Dashboard
-
-## Admin Access
-
-- URL: http://localhost:8000/admin
-- Username: admin
-- Password: admin123
-
-## Database
-
-- Type: SQLite
-- File: db.sqlite3
-- Location: Project root directory
-
-## Development
-
-### Run Migrations
-
-```bash
-python manage.py makemigrations
-python manage.py migrate
-```
-
-### Create Superuser
-
-```bash
-python manage.py createsuperuser
-```
-
-### Collect Static Files
-
-```bash
-python manage.py collectstatic
-```
-
-## Support
-
-For issues or questions, use the contact form at http://localhost:8000/contact/
+- User management (regular & company)
+- Pickup requests with statistics
+- Company waste requests
+- Blog post management
+- Contact messages
+- Waste types management
 
 ## License
 
-All rights reserved.
+MIT License

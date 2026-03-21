@@ -1,103 +1,236 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-bs-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{% block title %}Waste Management System{% endblock %}</title>
+    <title>{% block title %}EcoWaste Management{% endblock %}</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-success">
-        <div class="container">
-            <a class="navbar-brand" href="{% url 'home' %}">
-                <i class="fas fa-recycle"></i> EcoWaste
-            </a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav ms-auto">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'home' %}">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'how_it_works' %}">How It Works</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'recycling' %}">Recycling</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
-                    <li class="nav-item"><a class="nav-link" href="{% url 'company_tieup' %}">Company Tie-Up</a></li>
-                    {% if user.is_staff %}
-                        <li class="nav-item"><a class="nav-link btn btn-warning text-dark ms-2" href="/admin/"><i class="fas fa-user-shield"></i> Admin</a></li>
-                    {% endif %}
-                    {% if user.is_authenticated %}
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown">
-                                {{ user.username }}
-                            </a>
-                            <ul class="dropdown-menu">
-                                {% if user.is_staff %}
-                                    <li><a class="dropdown-item" href="/admin/"><i class="fas fa-user-shield"></i> Admin Panel</a></li>
-                                    <li><hr class="dropdown-divider"></li>
-                                {% endif %}
-                                {% if user.user_type == 'company' %}
-                                    <li><a class="dropdown-item" href="{% url 'company_dashboard' %}">Dashboard</a></li>
-                                {% else %}
-                                    <li><a class="dropdown-item" href="{% url 'user_dashboard' %}">Dashboard</a></li>
-                                {% endif %}
-                                <li><hr class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="{% url 'logout' %}">Logout</a></li>
-                            </ul>
+
+<nav class="navbar navbar-expand-lg navbar-dark sticky-top" id="mainNav">
+    <div class="container">
+        <a class="navbar-brand fw-bold" href="{% url 'home' %}">
+            <i class="fas fa-recycle me-1"></i> EcoWaste
+        </a>
+        <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item"><a class="nav-link" href="{% url 'home' %}"><i class="fas fa-home me-1"></i>Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'about' %}">About</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'services' %}">Services</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'how_it_works' %}">How It Works</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'recycling' %}">Recycling</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'blog' %}">Blog</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'leaderboard' %}"><i class="fas fa-trophy me-1 text-warning"></i>Leaderboard</a></li>
+            </ul>
+            <ul class="navbar-nav ms-auto align-items-center gap-1">
+                <!-- Dark mode toggle -->
+                <li class="nav-item">
+                    <button class="btn btn-sm btn-outline-light rounded-circle" id="darkModeToggle" title="Toggle dark mode">
+                        <i class="fas fa-moon" id="darkModeIcon"></i>
+                    </button>
+                </li>
+
+                {% if user.is_staff %}
+                <li class="nav-item">
+                    <a class="btn btn-sm btn-warning text-dark fw-bold ms-1" href="/admin/">
+                        <i class="fas fa-user-shield"></i> Admin
+                    </a>
+                </li>
+                {% endif %}
+
+                {% if user.is_authenticated %}
+                <!-- Notification Bell -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link position-relative" href="#" data-bs-toggle="dropdown">
+                        <i class="fas fa-bell fa-lg"></i>
+                        {% with unread_count=request.user.notifications.filter %}
+                        <span class="notif-badge" id="notifBadge" style="display:none;">0</span>
+                        {% endwith %}
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end notif-dropdown" style="min-width:320px;">
+                        <li class="dropdown-header d-flex justify-content-between align-items-center px-3 py-2">
+                            <strong>Notifications</strong>
+                            <a href="{% url 'mark_notifications_read' %}" class="btn btn-sm btn-outline-secondary">Mark all read</a>
                         </li>
-                    {% else %}
-                        <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
-                        <li class="nav-item"><a class="nav-link btn btn-light text-success ms-2" href="{% url 'register_user' %}">Sign Up</a></li>
-                    {% endif %}
-                </ul>
-            </div>
+                        <li><hr class="dropdown-divider m-0"></li>
+                        <div id="notifList">
+                            <li class="text-center text-muted py-3 small">Loading...</li>
+                        </div>
+                        <li><hr class="dropdown-divider m-0"></li>
+                        <li class="text-center py-2">
+                            <a href="{% if user.user_type == 'company' %}{% url 'company_dashboard' %}{% else %}{% url 'user_dashboard' %}{% endif %}" class="small text-success">View all</a>
+                        </li>
+                    </ul>
+                </li>
+
+                <!-- User dropdown -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle d-flex align-items-center gap-2" href="#" data-bs-toggle="dropdown">
+                        <span class="avatar-circle">{{ user.username|first|upper }}</span>
+                        <span class="d-none d-lg-inline">{{ user.username }}</span>
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end">
+                        <li class="dropdown-header">
+                            <div class="fw-bold">{{ user.get_full_name|default:user.username }}</div>
+                            <small class="text-muted">{{ user.email }}</small>
+                        </li>
+                        <li><hr class="dropdown-divider"></li>
+                        {% if user.user_type == 'company' %}
+                            <li><a class="dropdown-item" href="{% url 'company_dashboard' %}"><i class="fas fa-tachometer-alt me-2 text-success"></i>Dashboard</a></li>
+                        {% elif user.user_type == 'worker' %}
+                            <li><a class="dropdown-item" href="{% url 'worker_dashboard' %}"><i class="fas fa-truck me-2 text-warning"></i>Worker Dashboard</a></li>
+                        {% else %}
+                            <li><a class="dropdown-item" href="{% url 'user_dashboard' %}"><i class="fas fa-tachometer-alt me-2 text-success"></i>Dashboard</a></li>
+                            <li><a class="dropdown-item" href="{% url 'profile_edit' %}"><i class="fas fa-user-edit me-2 text-primary"></i>Edit Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'pickup_history' %}"><i class="fas fa-history me-2 text-info"></i>Pickup History</a></li>
+                        {% endif %}
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item text-danger" href="{% url 'logout' %}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                    </ul>
+                </li>
+                {% else %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'login' %}">Login</a></li>
+                <li class="nav-item">
+                    <a class="btn btn-light text-success fw-bold ms-1 btn-sm px-3" href="{% url 'register_user' %}">Sign Up</a>
+                </li>
+                {% endif %}
+            </ul>
         </div>
-    </nav>
+    </div>
+</nav>
 
-    {% if messages %}
-        <div class="container mt-3">
-            {% for message in messages %}
-                <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
-                    {{ message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-                </div>
-            {% endfor %}
-        </div>
-    {% endif %}
+{% if messages %}
+<div class="container mt-3">
+    {% for message in messages %}
+    <div class="alert alert-{{ message.tags }} alert-dismissible fade show shadow-sm" role="alert">
+        <i class="fas fa-{% if message.tags == 'success' %}check-circle{% elif message.tags == 'error' or message.tags == 'danger' %}exclamation-circle{% else %}info-circle{% endif %} me-2"></i>
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+    {% endfor %}
+</div>
+{% endif %}
 
-    {% block content %}{% endblock %}
+{% block content %}{% endblock %}
 
-    <footer class="bg-dark text-white mt-5 py-4">
+<footer class="footer-main mt-5">
+    <div class="footer-top py-5">
         <div class="container">
-            <div class="row">
-                <div class="col-md-4">
-                    <h5><i class="fas fa-recycle"></i> EcoWaste</h5>
-                    <p>Making the world cleaner, one pickup at a time.</p>
+            <div class="row g-4">
+                <div class="col-lg-4">
+                    <h5 class="fw-bold mb-3"><i class="fas fa-recycle text-success me-2"></i>EcoWaste</h5>
+                    <p class="text-muted">Making the world cleaner, one pickup at a time. Join thousands of users building a sustainable future.</p>
+                    <div class="d-flex gap-2 mt-3">
+                        <a href="#" class="social-btn"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-btn"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
                 </div>
-                <div class="col-md-4">
-                    <h5>Quick Links</h5>
-                    <ul class="list-unstyled">
-                        <li><a href="{% url 'about' %}" class="text-white">About Us</a></li>
-                        <li><a href="{% url 'services' %}" class="text-white">Services</a></li>
-                        <li><a href="{% url 'contact' %}" class="text-white">Contact</a></li>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="fw-bold mb-3">Quick Links</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="{% url 'about' %}">About Us</a></li>
+                        <li><a href="{% url 'services' %}">Services</a></li>
+                        <li><a href="{% url 'how_it_works' %}">How It Works</a></li>
+                        <li><a href="{% url 'recycling' %}">Recycling</a></li>
+                        <li><a href="{% url 'blog' %}">Blog</a></li>
                     </ul>
                 </div>
-                <div class="col-md-4">
-                    <h5>Contact</h5>
-                    <p><i class="fas fa-envelope"></i> info@ecowaste.com</p>
-                    <p><i class="fas fa-phone"></i> +1 234 567 8900</p>
+                <div class="col-lg-2 col-md-4">
+                    <h6 class="fw-bold mb-3">Support</h6>
+                    <ul class="list-unstyled footer-links">
+                        <li><a href="{% url 'faq' %}">FAQ</a></li>
+                        <li><a href="{% url 'contact' %}">Contact Us</a></li>
+                        <li><a href="{% url 'pricing' %}">Pricing</a></li>
+                        <li><a href="{% url 'leaderboard' %}">Leaderboard</a></li>
+                        <li><a href="{% url 'company_tieup' %}">Company Tie-Up</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-4 col-md-4">
+                    <h6 class="fw-bold mb-3">Contact</h6>
+                    <ul class="list-unstyled text-muted">
+                        <li class="mb-2"><i class="fas fa-map-marker-alt text-success me-2"></i>123 Green Street, Eco City</li>
+                        <li class="mb-2"><i class="fas fa-envelope text-success me-2"></i>info@ecowaste.com</li>
+                        <li class="mb-2"><i class="fas fa-phone text-success me-2"></i>+1 234 567 8900</li>
+                        <li class="mb-2"><i class="fas fa-clock text-success me-2"></i>Mon–Fri: 8AM – 6PM</li>
+                    </ul>
                 </div>
             </div>
-            <hr class="bg-white">
-            <p class="text-center mb-0">&copy; 2026 EcoWaste. All rights reserved.</p>
         </div>
-    </footer>
+    </div>
+    <div class="footer-bottom py-3">
+        <div class="container d-flex flex-wrap justify-content-between align-items-center">
+            <p class="mb-0 text-muted small">&copy; 2026 EcoWaste. All rights reserved.</p>
+            <p class="mb-0 text-muted small">Built for a greener planet 🌱</p>
+        </div>
+    </div>
+</footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    {% block extra_js %}{% endblock %}
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// Dark mode
+const html = document.documentElement;
+const toggle = document.getElementById('darkModeToggle');
+const icon = document.getElementById('darkModeIcon');
+const saved = localStorage.getItem('theme') || 'light';
+html.setAttribute('data-bs-theme', saved);
+icon.className = saved === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+
+toggle?.addEventListener('click', () => {
+    const current = html.getAttribute('data-bs-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    html.setAttribute('data-bs-theme', next);
+    localStorage.setItem('theme', next);
+    icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
+});
+
+// Navbar scroll effect
+window.addEventListener('scroll', () => {
+    const nav = document.getElementById('mainNav');
+    if (nav) nav.classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Load notifications via fetch
+{% if user.is_authenticated %}
+fetch('/users/api/notifications/')
+    .then(r => r.json())
+    .then(data => {
+        const badge = document.getElementById('notifBadge');
+        const list = document.getElementById('notifList');
+        if (data.unread > 0) {
+            badge.textContent = data.unread > 9 ? '9+' : data.unread;
+            badge.style.display = 'flex';
+        }
+        if (data.notifications.length === 0) {
+            list.innerHTML = '<li class="text-center text-muted py-3 small">No notifications</li>';
+        } else {
+            list.innerHTML = data.notifications.map(n => `
+                <li>
+                    <a class="dropdown-item py-2 ${n.is_read ? '' : 'notif-unread'}" href="${n.link || '#'}">
+                        <div class="d-flex gap-2 align-items-start">
+                            <span class="notif-icon notif-${n.type}"><i class="fas fa-${n.icon}"></i></span>
+                            <div>
+                                <div class="small">${n.message}</div>
+                                <div class="text-muted" style="font-size:11px;">${n.time}</div>
+                            </div>
+                        </div>
+                    </a>
+                </li>
+            `).join('');
+        }
+    }).catch(() => {
+        document.getElementById('notifList').innerHTML = '<li class="text-center text-muted py-3 small">No notifications</li>';
+    });
+{% endif %}
+</script>
+{% block extra_js %}{% endblock %}
 </body>
 </html>
